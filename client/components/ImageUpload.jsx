@@ -12,7 +12,7 @@ function ImageUpload() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // console.log(cookies.currentEmail);
+  console.log("cookies email", cookies.currentEmail);
 
   const showImg = async () => {
     try {
@@ -64,8 +64,9 @@ function ImageUpload() {
         temp[Math.max(Object.keys(temp))+1] = e.dataTransfer.files[0];
         setPreviewImg(temp);
         setFiles(Object.values(temp)); 
-        console.log(previewImg);
-        console.log(files);
+        // console.log(previewImg);
+        // console.log(files);
+
         // setFiles(Object.values(temp));
       }
     };
@@ -89,8 +90,8 @@ function ImageUpload() {
         setPreviewImg(temp);
         // setFiles(Object.values(temp));
         setFiles(Object.values(temp)); 
-        console.log(previewImg);
-        console.log(files);
+        // console.log(previewImg);
+        // console.log(files);
       }
     };
 
@@ -120,6 +121,7 @@ function ImageUpload() {
               body: formData
             }
         )
+        console.log('upload success');
         navigate('/dashboard');
       }
       catch (err) {
@@ -134,7 +136,7 @@ function ImageUpload() {
     delete imageObj[index];
     setPreviewImg(imageObj);
     setFiles(Object.values(previewImg)); 
-    console.log(files);
+    // console.log(files);
   }
 
   const preview = [];
