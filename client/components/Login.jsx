@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useContext } from "react";
 import { RecoveryContext } from "../App";
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useContext } from "react";
+import { RecoveryContext } from "../App";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,7 +28,15 @@ const Login = () => {
             headers: {
               "Content-Type": "application/json",
             },
+        const data = await fetch(
+          `http://localhost:8080/api/check_email?email=${userEmail}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
+        );
         );
         const json = await data.json();
         console.log(json);
@@ -37,7 +49,11 @@ const Login = () => {
           try {
             await fetch(`http://localhost:8080/api/send_email`, {
               method: "POST",
+              method: "POST",
               headers: {
+                "Content-Type": "application/json",
+              },
+              credentials: "include",
                 "Content-Type": "application/json",
               },
               credentials: "include",
@@ -45,7 +61,13 @@ const Login = () => {
                 OTP: OTP,
                 recipient_email: userEmail,
               }),
+                OTP: OTP,
+                recipient_email: userEmail,
+              }),
             });
+            navigate("/otp");
+          } catch (err) {
+            alert("User with this email does not exist!");
             navigate("/otp");
           } catch (err) {
             alert("User with this email does not exist!");
@@ -107,6 +129,9 @@ const Login = () => {
 
   return (
     <div>
+      <h1>
+        Adventure<br></br>Connect
+      </h1>
       <h1>
         Adventure<br></br>Connect
       </h1>
