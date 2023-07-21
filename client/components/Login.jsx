@@ -3,8 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { useContext } from "react";
 import { RecoveryContext } from "../App";
 
-
-
 const Login = () => {
   const navigate = useNavigate();
   const [authenticated, setAuthenticated] = useState(false);
