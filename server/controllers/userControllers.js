@@ -19,10 +19,10 @@ const nodemailer = require('nodemailer');
 // });
 
 const cloudStorage = new Storage({
-  keyFilename: `${__dirname}/../web-app-adventure-connect-39d349a3f0d5.json`,
-  projectId: 'web-app-adventure-connect',
+  keyFilename: `${__dirname}/../adventure-connect-2-6b84f5eb5738.json`,
+  projectId: 'adventure-connect-2',
 });
-const bucketName = "adventure-connect-user-image-bucket";
+const bucketName = "adventure-connect-2";
 const bucket = cloudStorage.bucket(bucketName);
 
 const userController = {};
