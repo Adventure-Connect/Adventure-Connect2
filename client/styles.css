@@ -1,16 +1,17 @@
-ul {
+/* ul {
   border-right: blue solid 2px;
   width: 300px;
   height: 900px;
   list-style: none;
 }
 
-li, a {
+li,
+a {
   color: pink;
   text-decoration: none;
   padding: 5px;
   font-size: large;
-}
+} */
 
 #bio {
   size: 40;
@@ -18,8 +19,8 @@ li, a {
   padding-left: 0; */
 }
 
-.carousel-container {
-  display:inline-block;
+/* .carousel-container {
+  display: inline-block;
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -29,14 +30,14 @@ li, a {
   overflow: hidden;
   width: 300px;
   height: 300px;
-}
+} */
 
 .inner {
   white-space: nowrap;
   transition: transform 0.3s;
 }
 
-.carousel-item {
+/* .carousel-item {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -44,7 +45,7 @@ li, a {
   width: 300px;
   background-color: aquamarine;
   color: black;
-}
+} */
 
 .indicators {
   display: flex;
@@ -90,7 +91,7 @@ li, a {
   padding: 0.25rem;
   font-size: 1rem;
   border: none;
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald", sans-serif;
   background-color: transparent;
 }
 
@@ -113,4 +114,10 @@ li, a {
   overflow: hidden;
   width: auto;
   height: 200px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
