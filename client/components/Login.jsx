@@ -112,7 +112,7 @@ const Login = () => {
         setLoginError(true);
       } else if (json.message === "Login successful!") {
         setAuthenticated(true);
-        navigate("/userprofile", {
+        navigate("/dashboard", {
           state: { currentUser: currentUser, authenticated: authenticated },
         });
       }
