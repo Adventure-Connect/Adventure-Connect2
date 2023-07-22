@@ -1,0 +1,22 @@
+.profileCards {
+  max-width: 20rem;
+  /* background-color: blue; */
+  margin-right: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.6rem;
+  gap: 0.6rem;
+  border: 2px solid black;
+  border-radius: 1.2rem;
+}
+
+.user-name {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.interests {
+  /* display: flex; */
+}

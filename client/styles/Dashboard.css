@@ -4,5 +4,7 @@
 }
 
 .carousel-container {
-  background-color: red;
+  /* background-color: red; */
+  margin-top: 10rem;
+  padding: 1.2rem;
 }

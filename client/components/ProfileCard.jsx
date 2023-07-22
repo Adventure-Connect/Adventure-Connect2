@@ -1,0 +1,23 @@
+import React from "react";
+import "../styles/ProfileCard.css";
+import { useNavigate } from "react-router-dom";
+
+function ProfileCard({ profilePhoto, name, bio, interests, email }) {
+  const nav = useNavigate();
+
+  const handleClick = () => {
+    nav("/userspecific", { state: { email } });
+  };
+
+  return (
+    <div className="profileCards">
+      <img className="carousel-img" src={profilePhoto} />
+      <div className="user-name">{name}</div>
+      <div className="bio">{bio}</div>
+      <div className="interests">{interests}</div>
+      <button onClick={handleClick}>View More Info</button>
+    </div>
+  );
+}
+
+export default ProfileCard;
