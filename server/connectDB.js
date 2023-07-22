@@ -19,3 +19,5 @@ const connectDB = () => {
 };
 
 module.exports = connectDB
+
+//this file does not currently use the variables in the .env file even though they require in dotenv

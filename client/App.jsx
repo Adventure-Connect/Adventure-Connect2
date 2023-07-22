@@ -13,6 +13,7 @@ import ChangePassword from './components/ChangePassword.jsx';
 import Dashboard from './components/Dashboard.jsx'
 import ImageUpload from './components/ImageUpload.jsx';
 import OTP from './components/OTP.jsx';
+import Chat from "./pages/Chat.jsx"
 export const RecoveryContext = createContext();
 import './styles.css'
 
@@ -40,6 +41,7 @@ const App = () => {
             <Route path='/userspecific' element={<UserSpecific />} />
             <Route path='/imageupload' element={<ImageUpload />} />
             <Route path='/otp' element={<OTP />} />
+            <Route path = "/chat" element ={<Chat/>} />
           </Routes>
         </BrowserRouter>
       </RecoveryContext.Provider>
