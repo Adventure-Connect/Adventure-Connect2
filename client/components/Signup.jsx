@@ -26,6 +26,7 @@ const Signup = () => {
     const [ password, setPassword ] = useState();
     const [ zipcode, setZipcode ] = useState();
     const [ bio, setBio ] = useState();
+    const [ imageCount, setImageCount ] = useState(0);
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -37,6 +38,7 @@ const Signup = () => {
             zipCode: zipcode,
             interests: Array.from(interests),
             bio: bio,
+            imageCount: imageCount
         };
         try {
             fetch('http://localhost:8080/api/signup', {

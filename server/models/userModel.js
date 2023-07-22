@@ -13,7 +13,8 @@ const usersSchema = new mongoose.Schema({
   image3: { type: Buffer },
   image4: { type: Buffer },
   image5: { type: Buffer },
-  image6: { type: Buffer }
+  image6: { type: Buffer },
+  imageCount: { type: Number }
 });
 
 const Users = mongoose.model("Users", usersSchema);

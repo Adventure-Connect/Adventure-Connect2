@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from 'react-router';
 function ImageUpload() {
   const [cookies, setCookie] = useCookies();
   const [images, setImages] = useState();
+  const [email, setEmail] = useState();
   const [dragActive, setDragActive] = useState(false);
   const inputRef = useRef(null);
   const [ files, setFiles ] = useState([]);
@@ -13,6 +14,9 @@ function ImageUpload() {
   const navigate = useNavigate();
 
   console.log("cookies email", cookies.currentEmail);
+  // console.log("location state", location.state.email);
+
+  
 
   const showImg = async () => {
     try {
@@ -47,7 +51,7 @@ function ImageUpload() {
 
     // triggers when file is dropped
     const handleDrop = function(e) {
-      if (files.length > 6) {
+      if (files.length >= 6) {
         return alert('You\'ve reached the maximum number of files');
       }
       e.preventDefault();
@@ -61,9 +65,17 @@ function ImageUpload() {
       // }
       if (e.dataTransfer.files && e.dataTransfer.files[0]) {
         const temp = {...previewImg};
-        temp[Math.max(Object.keys(temp))+1] = e.dataTransfer.files[0];
+        console.log('length Temp Keys + 1: ', Object.keys(temp).length+1);
+        const newFiles = e.dataTransfer.files;
+        for (let i = 0; i < newFiles.length; i++) {
+          if (Object.keys(temp).length+1 > 6) break;
+          temp[Object.keys(temp).length+1] = newFiles[i];
+        }
+        // temp[Object.keys(temp).length+1] = e.dataTransfer.files[0];
         setPreviewImg(temp);
         setFiles(Object.values(temp)); 
+        console.log('files: ', files);
+        console.log('files length: ', files.length);
         // console.log(previewImg);
         // console.log(files);
 
@@ -73,6 +85,7 @@ function ImageUpload() {
 
     // triggers when file is selected with click
     const handleChange = function(e) {
+      
       e.preventDefault();
       // while (files.length < 6) {
       if (files.length > 6) {
@@ -86,10 +99,17 @@ function ImageUpload() {
       // }
       if (e.target.files && e.target.files[0]) {
         const temp = {...previewImg};
-        temp[Math.max(Object.keys(temp))+1] = e.target.files[0]
+        console.log('length Temp Keys + 1: ', Object.keys(temp).length+1);
+        const newFiles = e.target.files;
+        for (let i = 0; i < newFiles.length; i++) {
+          if (Object.keys(temp).length+1 > 6) break;
+          temp[Object.keys(temp).length+1] = newFiles[i];
+        }
         setPreviewImg(temp);
         // setFiles(Object.values(temp));
         setFiles(Object.values(temp)); 
+        console.log('files: ', files);
+        console.log('files length: ', files.length);
         // console.log(previewImg);
         // console.log(files);
       }
@@ -101,9 +121,10 @@ function ImageUpload() {
     };
 
     // handle file upload
-    const handleFileUpload = async (e) => {
+    const handleFileUpload = async (e, email) => {
       e.preventDefault();
       console.log('inside upload', files);
+      console.log('email state', email);
       const formData = new FormData();
       files.forEach(file => {
         formData.append('image', file);
@@ -112,7 +133,7 @@ function ImageUpload() {
       //   console.log(pair[0]+ ' - ' + pair[1]); 
       // }
       try {
-        await fetch(`/api/upload-file-to-cloud-storage/${location.state.email}`, {
+        await fetch(`/api/upload-file-to-cloud-storage/${email}`, {
         // await fetch(`/api/upload-file-to-cloud-storage/shiyu0811liu@gmail.com`, {
               method  : 'POST',
               // headers: {
@@ -151,6 +172,14 @@ function ImageUpload() {
   //   console.log(file);
   //   preview.push(<div><img className='image_preview' src={URL.createObjectURL(file)}/><button className='deleteImage'>x</button></div>)
   // })
+  useEffect(() => {
+    if (!location.state) {
+      setEmail(cookies.currentEmail);
+    }
+    else {
+      setEmail(location.state.email);
+    }
+  }, [cookies, location.state]);
 
   return (
     <div style={{width: '80%', height:'100%', margin: 'auto', textAlign:'center'}}>
@@ -169,7 +198,7 @@ function ImageUpload() {
         { dragActive && <div id='drag-file-element' onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}></div> }
        </form>
        <div style={{marginBottom: '3%'}}>
-        <button className='btn' onClick={e => handleFileUpload(e)} id='image_upload'>Upload</button>
+        <button className='btn' onClick={e => handleFileUpload(e, email)} id='image_upload'>Upload</button>
        </div>
        <div id='preview_container' style={{width:'80%', margin:'auto', display:'grid', gridTemplateColumns: 'repeat(2, 1fr)'}}>
         {preview}
