@@ -49,7 +49,7 @@ const Signup = () => {
                 credentials: 'include',
                 body: JSON.stringify(info)
             })
-            navigate('/imageupload', {state:{email: email}});
+            navigate('/imageupload', {state:{email: email, imageCount: imageCount}});
             return;
         }
         catch (err) {

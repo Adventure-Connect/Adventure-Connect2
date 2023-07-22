@@ -51,7 +51,7 @@ router.post('/signup', userController.createNewUser, (req, res) => {
 });
 
 //update profile/settings route:
-router.put('/api/user', userController.updateUser, (req, res) => {
+router.put('/api/user', (req, res, next) => {console.log('enter api/api/user'); return next();}, userController.updateUser, (req, res) => {
   res.end();
 });
 
