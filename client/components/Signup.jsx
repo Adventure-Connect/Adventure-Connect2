@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import Select from "react-select";
-import ImageUpload from "./ImageUpload";
 
 const Signup = () => {
   const list = [
@@ -57,108 +56,107 @@ const Signup = () => {
       return err;
     }
   };
-};
 
-const removeInterest = (e) => {
-  e.preventDefault();
-  let interest = e.target.parentElement.getAttribute("interest");
-  const tempInt = new Set(interests);
-  const tempAct = activities.slice();
-  tempInt.delete(interest);
-  tempAct.push({ label: interest, value: interest });
-  setInterests(tempInt);
-  setActivities(tempAct.sort((a, b) => a.label.localeCompare(b.label)));
-  console.log(interests);
-};
+  const removeInterest = (e) => {
+    e.preventDefault();
+    let interest = e.target.parentElement.getAttribute("interest");
+    const tempInt = new Set(interests);
+    const tempAct = activities.slice();
+    tempInt.delete(interest);
+    tempAct.push({ label: interest, value: interest });
+    setInterests(tempInt);
+    setActivities(tempAct.sort((a, b) => a.label.localeCompare(b.label)));
+    console.log(interests);
+  };
 
-const interestLabels = [];
-interests.forEach((interest) => {
-  interestLabels.push(
-    <div interest={interest}>
-      {interest}
-      <button className="deleteInterest" onClick={(e) => removeInterest(e)}>
-        x
-      </button>
-    </div>
-  );
-});
+  const interestLabels = [];
+  interests.forEach((interest) => {
+    interestLabels.push(
+      <div interest={interest}>
+        {interest}
+        <button className="deleteInterest" onClick={(e) => removeInterest(e)}>
+          x
+        </button>
+      </div>
+    );
+  });
 
-return (
-  <div>
-    {/* <form onSubmit={handleSubmit} encType='multipart/form-data'> */}
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Name</label>
-        <input
-          type="text"
-          require="true"
-          onChange={(e) => setName(e.target.value)}
-        ></input>
-      </div>
-      <div>
-        <label>Email Address</label>
-        <input
-          type="text"
-          require="true"
-          onChange={(e) => setEmail(e.target.value)}
-        ></input>
-      </div>
-      <div>
-        <label>Password</label>
-        <input
-          type="password"
-          require="true"
-          onChange={(e) => setPassword(e.target.value)}
-        ></input>
-      </div>
-      <div>
-        <label>Zipcode</label>
-        <input
-          type="text"
-          require="true"
-          onChange={(e) => setZipcode(e.target.value)}
-        ></input>
-      </div>
-      {/* <div>
+  return (
+    <div>
+      {/* <form onSubmit={handleSubmit} encType='multipart/form-data'> */}
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Name</label>
+          <input
+            type="text"
+            require="true"
+            onChange={(e) => setName(e.target.value)}
+          ></input>
+        </div>
+        <div>
+          <label>Email Address</label>
+          <input
+            type="text"
+            require="true"
+            onChange={(e) => setEmail(e.target.value)}
+          ></input>
+        </div>
+        <div>
+          <label>Password</label>
+          <input
+            type="password"
+            require="true"
+            onChange={(e) => setPassword(e.target.value)}
+          ></input>
+        </div>
+        <div>
+          <label>Zipcode</label>
+          <input
+            type="text"
+            require="true"
+            onChange={(e) => setZipcode(e.target.value)}
+          ></input>
+        </div>
+        {/* <div>
                     <label>Photos</label>
                     <div style={{display: 'grid', gridTemplate: '1fr 1fr 1fr', textAlign: 'center'}}>
                         {imageSelector}
                     </div>
                 </div> */}
-      <div>
-        <label>Interests</label>
-        <Select
-          placeholder=""
-          options={activities}
-          onChange={(opt) => {
-            const tempInt = new Set(interests);
-            let tempAct = activities.slice();
-            tempInt.add(opt.value);
-            tempAct = tempAct.filter((act) => act.label !== opt.value);
-            setInterests(tempInt);
-            setActivities(tempAct);
-            console.log(interests);
-          }}
-        />
-        <div id="interestBox">{interestLabels}</div>
-      </div>
-      <div>
-        <label>Tell us more about yourself</label>
-        <br></br>
-        <input
-          type="text"
-          placeholder="Favorite outdoor memories
+        <div>
+          <label>Interests</label>
+          <Select
+            placeholder=""
+            options={activities}
+            onChange={(opt) => {
+              const tempInt = new Set(interests);
+              let tempAct = activities.slice();
+              tempInt.add(opt.value);
+              tempAct = tempAct.filter((act) => act.label !== opt.value);
+              setInterests(tempInt);
+              setActivities(tempAct);
+              console.log(interests);
+            }}
+          />
+          <div id="interestBox">{interestLabels}</div>
+        </div>
+        <div>
+          <label>Tell us more about yourself</label>
+          <br></br>
+          <input
+            type="text"
+            placeholder="Favorite outdoor memories
                     What are you looking for?"
-          onChange={(e) => setBio(e.target.value)}
-          style={{ height: "150px", width: "250px", textAlign: "top" }}
-        ></input>
-      </div>
-      {/* <ImageUpload /> */}
-      <button className="btn" type="submit">
-        Create Account
-      </button>
-    </form>
-  </div>
-);
+            onChange={(e) => setBio(e.target.value)}
+            style={{ height: "150px", width: "250px", textAlign: "top" }}
+          ></input>
+        </div>
+        <button className="btn" type="submit">
+          Create Account
+        </button>
+      </form>
+    </div>
+  );
+};
 
 export default Signup;

@@ -160,7 +160,7 @@ userController.uploadImages = (req, res) => {
   const upload = multer({
     storage: multer.memoryStorage(),
     limits: {
-      fileSize: 5 * 1024 * 1024, // no larger than 5mb, you can change as needed.
+      fileSize: 10 * 1024 * 1024, // no larger than 5mb, you can change as needed.
     },
     onError: function (err, next) {
       console.log("error", err);
@@ -273,7 +273,7 @@ userController.getProfiles = async (req, res, next) => {
   try {
     //grab zipCode from the cookie and convert to number to match schema
     // const zipCode = Number(req.cookies.zipCode);
-    const zipCode = 78746;
+    const zipCode = 123456;
     //grab interests from the cookie, parse it from JSON format
     // const interests = JSON.parse(req.cookies.currentInterests);
     const interests = ["Climbing", "Hiking"];
