@@ -40,8 +40,12 @@ userController.verifyLogin = async (req, res, next) => {
 
     if (user) {
       console.log("successful log in");
-      //maybe just make a cookie for activities and zipcode? so don't have to query the database again later when finding similar users?
+
       res.cookie("currentUsername", user.username, {
+        httpOnly: false,
+        overwrite: true,
+      }); // this is currently undefined, the field is under name
+      res.cookie("currentEmail", user.email, {
         httpOnly: false,
         overwrite: true,
       });
@@ -53,7 +57,12 @@ userController.verifyLogin = async (req, res, next) => {
         httpOnly: false,
         overwrite: true,
       });
+      res.cookie("imageCount", JSON.stringify(user.imageCount), {
+        httpOnly: false,
+        overwrite: true,
+      });
       res.status(200).json({ message: "Login successful!" });
+
       res.locals.loginStatus = true;
     } else {
       // If the user is not found, send an error response
@@ -97,6 +106,8 @@ userController.createNewUser = async (req, res, next) => {
     zipCode: req.body.zipCode,
     interests: req.body.interests,
     bio: req.body.bio,
+    imageCount: req.body.imageCount,
+    profilePhoto: "",
   });
   console.log("made the document");
   try {
@@ -111,6 +122,10 @@ userController.createNewUser = async (req, res, next) => {
       overwrite: true,
     });
     res.cookie("zipCode", JSON.stringify(savedUser.zipCode), {
+      httpOnly: false,
+      overwrite: true,
+    });
+    res.cookie("imageCount", JSON.stringify(user.imageCount), {
       httpOnly: false,
       overwrite: true,
     });
@@ -166,7 +181,7 @@ userController.uploadImages = (req, res) => {
       return;
     }
     try {
-      req.files.forEach((file) => {
+      req.files.forEach((file, index) => {
         const blob = bucket.file(file.originalname);
         const blobStream = blob.createWriteStream();
         blobStream.on("error", (err) => {
@@ -175,10 +190,24 @@ userController.uploadImages = (req, res) => {
         });
         blobStream.on("finish", async () => {
           // The public URL can be used to directly access the file via HTTP.
+
           const publicUrl = format(
             `https://storage.googleapis.com/${bucket.name}/${blob.name}`
           );
           Images.create({ email: email, image: publicUrl });
+          if (index === 0) {
+            const updatedUser = await Users.findOneAndUpdate(
+              { email: email, profilePhoto: "" },
+              { $set: { profilePhoto: publicUrl } },
+              { new: true }
+            );
+            if (updatedUser) {
+              console.log("profile photo updated for new User");
+            } else {
+              console.log("user already exists, profile photo not updated");
+            }
+            res.locals.profilePhoto = publicUrl;
+          }
         });
         // urls.push(publicUrl);
         blobStream.end(file.buffer);
@@ -192,15 +221,41 @@ userController.uploadImages = (req, res) => {
 
 userController.updateUser = async (req, res, next) => {
   try {
+    console.log("enter updateUser");
+    console.log("req.body.imageCount: ", req.body.imageCount);
     // grab username from the currentUser cookie
     const username = req.cookies.currentUsername;
+    const email = req.cookies.currentEmail;
     //find document by username and update it with the values from req.body
-    const updatedUser = await Users.findOneAndUpdate({ username }, req.body, {
-      new: true,
-    });
+
+    const updatedUser = await Users.findOneAndUpdate(
+      { email }, //this used to be username, changed to email
+      req.body,
+      { new: true }
+    );
 
     if (updatedUser) {
       console.log(updatedUser);
+      res.cookie("currentUsername", updatedUser.username, {
+        httpOnly: false,
+        overwrite: true,
+      }); // this is currently undefined, the field is under name
+      res.cookie("currentEmail", updatedUser.email, {
+        httpOnly: false,
+        overwrite: true,
+      });
+      res.cookie("currentInterests", JSON.stringify(updatedUser.interests), {
+        httpOnly: false,
+        overwrite: true,
+      });
+      res.cookie("zipCode", JSON.stringify(updatedUser.zip_code), {
+        httpOnly: false,
+        overwrite: true,
+      });
+      res.cookie("imageCount", JSON.stringify(updatedUser.imageCount), {
+        httpOnly: false,
+        overwrite: true,
+      });
       res.status(200);
       // Document found and updated successfully
     } else {
