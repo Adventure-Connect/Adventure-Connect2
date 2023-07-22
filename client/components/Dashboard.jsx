@@ -6,6 +6,7 @@ import "react-multi-carousel/lib/styles.css";
 import testImg from "../images/pika.jpg";
 import "../styles/Dashboard.css";
 
+
 const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
@@ -29,6 +30,7 @@ const responsive = {
 const Dashboard = () => {
   return (
     <div>
+      
       <Carousel className="carousel-container" responsive={responsive}>
         <div>
           <div>Item1</div>
