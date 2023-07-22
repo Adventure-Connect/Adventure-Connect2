@@ -162,10 +162,12 @@ userController.uploadImages = (req, res) => {
               { $set: { profilePhoto: publicUrl} },
               { new: true },
             );
-            if (updateUser) {
+            if (updatedUser) {
               console.log('profile photo updated for new User')
             }
-            else console.log('user already exists, profile photo not updated')
+            else {
+              console.log('user already exists, profile photo not updated')
+            }
             res.locals.profilePhoto = publicUrl;
           }
         });
