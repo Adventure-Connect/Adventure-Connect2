@@ -28,8 +28,10 @@ const UserSpecific = () => {
   });
 
   return (
-    <div>
+    <div className="user-specific-container">
       <div>{location.state.name}</div>
+      <div>{location.state.email}</div>
+      <div>{location.state.bio}</div>
       <div>{renderPhotos}</div>
     </div>
   );

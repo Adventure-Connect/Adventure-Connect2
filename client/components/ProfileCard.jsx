@@ -6,7 +6,7 @@ function ProfileCard({ profilePhoto, name, bio, interests, email }) {
   const nav = useNavigate();
 
   const handleClick = () => {
-    nav("/userspecific", { state: { email } });
+    nav("/userspecific", { state: { email, name, bio } });
   };
 
   return (

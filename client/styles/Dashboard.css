@@ -3,8 +3,12 @@
   height: 200px;
 }
 
-.carousel-container {
-  /* background-color: red; */
-  margin-top: 10rem;
-  padding: 1.2rem;
+.dashboard-container {
+  /* border: 2px solid black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  max-width: 50rem; */
 }

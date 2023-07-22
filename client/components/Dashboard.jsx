@@ -58,8 +58,16 @@ const Dashboard = () => {
   });
 
   return (
-    <div>
-      <Carousel className="carousel-container" responsive={responsive}>
+    <div className="dashboard-container">
+      <Carousel
+        responsive={responsive}
+        containerClass="container"
+        swipeable={false}
+        draggable={false}
+        // showDots={true}
+        ssr={true} // means to render carousel on server-side.
+        infinite={true}
+      >
         {renderArr}
       </Carousel>
     </div>
