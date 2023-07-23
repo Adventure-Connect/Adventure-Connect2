@@ -51,6 +51,7 @@ const ImageUpload = forwardRef((props, ref) => {
   useEffect(() => {
     // If props.email or props.imageCount changes, update states
     console.log('email or imageCount is changing')
+    if (!props.email || !props.imageCount) return;
     setEmail(props.email);
     setImageCount(props.imageCount);
   }, [props.email, props.imageCount]);
@@ -116,7 +117,11 @@ const ImageUpload = forwardRef((props, ref) => {
         setPreviewImg(temp);
         setFiles(Object.values(temp)); 
         setImageCount(imageCount);
-        props.updateImageCount(imageCount);
+        //updates imageCount in parent component if it exists
+        if (props.updateImageCount) {
+          props.updateImageCount(imageCount);
+        }
+        
         // console.log('files: ', files);
         // console.log('files length: ', files.length);
         // console.log(previewImg);
@@ -145,7 +150,10 @@ const ImageUpload = forwardRef((props, ref) => {
         setPreviewImg(temp);
         setFiles(Object.values(temp)); 
         setImageCount(imageCount);
-        props.updateImageCount(imageCount);
+        //updates parent component imageCount state if it exists
+        if (props.updateImageCount) {
+          props.updateImageCount(imageCount);
+        }
         // console.log('files: ', files);
         // console.log('files length: ', files.length);
         // console.log(previewImg);
@@ -209,7 +217,12 @@ const ImageUpload = forwardRef((props, ref) => {
     setPreviewImg(imageObj);
     setFiles(Object.values(previewImg)); 
     setImageCount(--imageCount);
-    props.updateImageCount(--imageCount);
+    console.log(imageCount);
+    //updates imageCount in parent component if it exists
+    if (props.updateImageCount) {
+      props.updateImageCount(--imageCount);
+    }
+    
     // console.log(files);
   }
 
