@@ -1,7 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
 import Select from 'react-select';
+import ImageUpload from './ImageUpload';
 
 const Signup = () => {
 
@@ -16,6 +17,8 @@ const Signup = () => {
         { label: 'Roller Skating',  value: 'Roller Skating' },
         { label: 'Trail Running',  value: 'Trail Running' }
     ];
+    //create ref to image upload child component
+    const imageUploadRef = useRef(null);
 
     const navigate = useNavigate();
     // const [ interestLabels, setInterestLabels ] = useState([]);
@@ -28,7 +31,13 @@ const Signup = () => {
     const [ bio, setBio ] = useState();
     const [ imageCount, setImageCount ] = useState(0);
 
-    const handleSubmit = async e => {
+    //function to update imageCount from child component
+    const updateImageCount = (newImageCount) => {
+        setImageCount(newImageCount);
+    }
+
+    //signup with provided information and call image upload function from ImageUpload child component
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('inside submit', interests)
         const info = {
@@ -41,7 +50,7 @@ const Signup = () => {
             imageCount: imageCount
         };
         try {
-            fetch('http://localhost:8080/api/signup', {
+            await fetch('http://localhost:8080/api/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -49,7 +58,10 @@ const Signup = () => {
                 credentials: 'include',
                 body: JSON.stringify(info)
             })
-            navigate('/imageupload', {state:{email: email, imageCount: imageCount}});
+            if (imageUploadRef.current) {
+                imageUploadRef.current.handleFileUpload(e, email. imageCount);
+            }
+            navigate('/dashboard', {state:{email: email}});
             return;
         }
         catch (err) {
@@ -58,6 +70,7 @@ const Signup = () => {
         };
         
     }
+
     
     const removeInterest = (e) => {
         e.preventDefault();
@@ -79,7 +92,7 @@ const Signup = () => {
     return (
         <div>
             {/* <form onSubmit={handleSubmit} encType='multipart/form-data'> */}
-            <form onSubmit={handleSubmit}>
+            {/* <form onSubmit={handleSubmit}> */}
                 <div>
                     <label >Name</label>
                     <input type='text' require='true' onChange={e => setName(e.target.value)}></input>
@@ -103,6 +116,9 @@ const Signup = () => {
                     </div>
                 </div> */}
                 <div>
+                    <ImageUpload email={email} ref={imageUploadRef} updateImageCount={updateImageCount} imageCount={imageCount}/>
+                </div>
+                <div>
                     <label>Interests</label>
                     <Select
                         placeholder=''
@@ -117,16 +133,21 @@ const Signup = () => {
                             console.log(interests);
                         }}
                     />
-                    <div id='interestBox'>{interestLabels}</div>
+                    <div id='interestBox'>
+                        {interestLabels}
+                    </div>
                 </div>
+                
                 <div>
                     <label>Tell us more about yourself</label>
                     <br></br>
                     <input type='text' placeholder='Favorite outdoor memories
-                    What are you looking for?' onChange={e => setBio(e.target.value)} style={{height: '150px', width: '250px', textAlign: 'top'}}></input>
+                    What are you looking for?' onChange={e => setBio(e.target.value)} style={{height: '150px', width: '250px', textAlign: 'top'}}>
+                    </input>
                 </div>
-                <button className='btn' type='submit'>Create Account</button>
-            </form>
+                {/* <button className='btn' type='submit'>Create Account</button> */}
+                <button className='btn' onClick={handleSubmit}>Create Account</button>
+            {/* </form> */}
         </div>
     )
 }

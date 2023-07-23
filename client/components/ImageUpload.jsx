@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate, useLocation } from 'react-router';
 
-function ImageUpload() {
+const ImageUpload = forwardRef((props, ref) => {
   const [cookies, setCookie] = useCookies();
   const [images, setImages] = useState();
   const [email, setEmail] = useState();
-  const [imageCount, setImageCount] = useState();
+  const [imageCount, setImageCount] = useState(0);
   const [dragActive, setDragActive] = useState(false);
   const inputRef = useRef(null);
   const [ files, setFiles ] = useState([]);
@@ -19,7 +19,41 @@ function ImageUpload() {
   // if (location.state) console.log('location state imageCount: ', location.state.imageCount);
   // console.log("location state", location.state.email);
 
-  
+  //update state with email and imageCount from cookies (logged in user) or location state (newly signed up user)
+  // useEffect(() => {
+  //   if (!props.email) {
+  //     console.log('props.email')
+  //     setEmail(props.email);
+  //     setImageCount(props.imageCount);
+  //   }
+  //   else if (cookies.currentEmail) {
+  //     console.log('cookies')
+  //     setEmail(cookies.currentEmail);
+  //     setImageCount(parseInt(cookies.imageCount));
+  //     // console.log('stateImageCount from cookies', imageCount);
+  //   }
+  //   else {
+  //     setEmail(location.state.email);
+  //     setImageCount(parseInt(location.state.imageCount));
+  //     console.log('stateImageCount from location', imageCount);
+  //   }
+  // }, [cookies, location.state]);
+
+  useEffect(() => {
+    const currentEmailFromCookies = cookies.currentEmail;
+    if (currentEmailFromCookies) {
+      console.log('cookies')
+      setEmail(currentEmailFromCookies);
+      setImageCount(parseInt(cookies.imageCount));
+    }
+  }, []);
+
+  useEffect(() => {
+    // If props.email or props.imageCount changes, update states
+    console.log('email or imageCount is changing')
+    setEmail(props.email);
+    setImageCount(props.imageCount);
+  }, [props.email, props.imageCount]);
 
   const showImg = async () => {
     try {
@@ -82,6 +116,7 @@ function ImageUpload() {
         setPreviewImg(temp);
         setFiles(Object.values(temp)); 
         setImageCount(imageCount);
+        props.updateImageCount(imageCount);
         // console.log('files: ', files);
         // console.log('files length: ', files.length);
         // console.log(previewImg);
@@ -102,7 +137,7 @@ function ImageUpload() {
         // console.log('length Temp Keys + 1: ', Object.keys(temp).length+1);
         const newFiles = e.target.files;
         for (let i = 0; i < newFiles.length; i++) {
-          if (imageCount> 6) break;
+          if (imageCount + 1 > 6) break;
           temp[Object.keys(temp).length+1] = newFiles[i];
           imageCount += 1;
           console.log('imageCount: ', imageCount);
@@ -110,6 +145,7 @@ function ImageUpload() {
         setPreviewImg(temp);
         setFiles(Object.values(temp)); 
         setImageCount(imageCount);
+        props.updateImageCount(imageCount);
         // console.log('files: ', files);
         // console.log('files length: ', files.length);
         // console.log(previewImg);
@@ -132,9 +168,6 @@ function ImageUpload() {
       files.forEach(file => {
         formData.append('image', file);
       });
-      // for (var pair of formData.entries()) {
-      //   console.log(pair[0]+ ' - ' + pair[1]); 
-      // }
       try {
         await fetch(`/api/upload-file-to-cloud-storage/${email}`, {
         // await fetch(`/api/upload-file-to-cloud-storage/shiyu0811liu@gmail.com`, {
@@ -152,7 +185,7 @@ function ImageUpload() {
                     'Content-Type': 'application/json'
                 },
                 credentials: 'include',
-                body: JSON.stringify({ imageCount} )
+                body: JSON.stringify({ imageCount } )
             })
         console.log('imageCount updated');
         navigate('/dashboard');
@@ -162,6 +195,11 @@ function ImageUpload() {
         return alert('Issue uploading your images. Please try again later.');
       }
     }
+
+    //expose handleFileUpload function to parent component
+    React.useImperativeHandle(ref, () => ({
+      handleFileUpload,
+    }));
   
   //removes image when 'x' is clicked on image preview, updates imageCount state
   const removeImage = (e, imageCount) => {
@@ -171,35 +209,17 @@ function ImageUpload() {
     setPreviewImg(imageObj);
     setFiles(Object.values(previewImg)); 
     setImageCount(--imageCount);
+    props.updateImageCount(--imageCount);
     // console.log(files);
   }
 
   const preview = [];
-  // files.forEach(file => {
-  //   console.log(file);
-  //   preview.push(<div><img className='image_preview' src={URL.createObjectURL(file)}/><button className='deleteImage'>x</button></div>)
-  // })
+  
   for (const key in previewImg) {
     preview.push(<div image_index={key} style={{overflow: 'hidden', width:'300px', height: '300px'}}><img className='image_preview' src={URL.createObjectURL(previewImg[key])}/><button className='deleteImage' onClick={e => removeImage(e, imageCount)}>x</button></div>)
   }
-  // Object.values(previewImg).forEach((file) => {
-  //   console.log(file);
-  //   preview.push(<div><img className='image_preview' src={URL.createObjectURL(file)}/><button className='deleteImage'>x</button></div>)
-  // })
 
-  //update state with email and imageCount from cookies (loggin in user) or location state (newly signed up user)
-  useEffect(() => {
-    if (!location.state) {
-      setEmail(cookies.currentEmail);
-      setImageCount(parseInt(cookies.imageCount));
-      // console.log('stateImageCount from cookies', imageCount);
-    }
-    else {
-      setEmail(location.state.email);
-      setImageCount(parseInt(location.state.imageCount));
-      // console.log('stateImageCount from location', imageCount);
-    }
-  }, [cookies, location.state]);
+  
 
   return (
     <div style={{width: '80%', height:'100%', margin: 'auto', textAlign:'center'}}>
@@ -228,6 +248,6 @@ function ImageUpload() {
        </div>
     </div>
   );
-}
+});
 
 export default ImageUpload;

@@ -59,23 +59,8 @@ userController.verifyLogin = async (req, res, next) => {
   return next();
   }
 
-  // userController.test = (req, res, next) => {
-  //   res.send('test')
-  // }
-
-  // fetch(endpoint, {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify({
-  //     properties
-  //   })
-  // })
-  // .then(response => response.json())
-  // .then(data => console.log(data))
-  // .catch(error => console.log(error))
-
+  //create new user from signup, if successful route to dashboard
+  
   userController.createNewUser = async (req, res, next) => {
     console.log(Users);
     //set all the values for no user from req.body
