@@ -6,6 +6,10 @@
   align-items: center;
 }
 
+.navbar h1 {
+  color: white;
+}
+
 .menu-bars {
   margin-left: 2rem;
   font-size: 2rem;
@@ -19,9 +23,10 @@
   display: flex;
   justify-content: center;
   position: fixed;
-  top:0;
+  top: 0;
   left: -100%;
   transition: 850ms;
+  z-index: 1;
 }
 
 .nav-menu.active {
