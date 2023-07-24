@@ -18,41 +18,44 @@ import Home from "./components/Home.jsx";
 import Navbar from "./components/Navbar.jsx";
 export const RecoveryContext = createContext();
 import "./styles.css";
+import PrivateRoutes from "./utils/PrivateRoutes.js";
 
 const App = () => {
   const [email, setEmail] = useState("");
   const [otp, setOTP] = useState("");
 
   return (
-
-    <div>
+    <>
       <RecoveryContext.Provider value={{ otp, setOTP, email, setEmail }}>
         <BrowserRouter>
           <Navbar />
           <Routes>
+            //PrivateRoutes protects routes from users who are not logged in
+            <Route element={<PrivateRoutes />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/userprofile" element={<UserProfile />} />
+              <Route path="/account" element={<EditProfile />} />
+              <Route path="/account/interests" element={<AccountInterests />} />
+              <Route path="/account/management" element={<AccountMgmt />} />
+              <Route path="/account/password" element={<ChangePassword />} />
+              <Route path="/userspecific" element={<UserSpecific />} />
+              <Route path="/settings" element={<SettingsBar />} />
+              <Route path="/matches" element={<Matches />} />
+              <Route path="/home" element={<Home />} />
+            </Route>
             <Route index element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/passwordreset" element={<PasswordReset />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/userprofile" element={<UserProfile />} />
-            <Route path="/settings" element={<SettingsBar />} />
-            <Route path="/account" element={<EditProfile />} />
-            <Route path="/account/interests" element={<AccountInterests />} />
-            <Route path="/account/management" element={<AccountMgmt />} />
-            <Route path="/account/password" element={<ChangePassword />} />
             <Route
               path="*"
               element={<div>404 Error. This page was not found</div>}
             />
-            <Route path="/userspecific" element={<UserSpecific />} />
             <Route path="/imageupload" element={<ImageUpload />} />
             <Route path="/otp" element={<OTP />} />
-            <Route path="/matches" element={<Matches />} />
-            <Route path="/home" element={<Home />} />
           </Routes>
         </BrowserRouter>
       </RecoveryContext.Provider>
-    </div>
+    </>
   );
 };
 

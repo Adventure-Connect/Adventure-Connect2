@@ -83,15 +83,15 @@ const Login = () => {
       state: { currentUser: currentUser, authenticated: authenticated },
     });
   }
-  const verifyAuthentication = () => {
-    if (authenticated) {
-      navigate("/userprofile", {
-        state: { currentUser: currentUser, authenticated: authenticated },
-      });
-    } else {
-      console.log("user credentials not accepted");
-    }
-  };
+  // const verifyAuthentication = () => {
+  //   if (authenticated) {
+  //     navigate("/userprofile", {
+  //       state: { currentUser: currentUser, authenticated: authenticated },
+  //     });
+  //   } else {
+  //     console.log("user credentials not accepted");
+  //   }
+  // };
 
   //sends request to backend to verify user credentials
   const handleSubmit = async (e) => {
@@ -126,9 +126,6 @@ const Login = () => {
 
   return (
     <div>
-      <h1>
-        Adventure<br></br>Connect
-      </h1>
       <h1>
         Adventure<br></br>Connect
       </h1>
