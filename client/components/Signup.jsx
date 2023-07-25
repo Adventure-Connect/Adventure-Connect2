@@ -39,6 +39,14 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('inside submit', interests)
+        if (!name || !email || !password || !zipcode || !bio) {
+            alert('Please fill out all required fields');
+            return;
+        }
+        if (zipcode.length !== 5) {
+            alert('Please enter a valid zipcode');
+            return;
+        }
         const info = {
             name: name,
             email: email,
@@ -94,19 +102,19 @@ const Signup = () => {
             {/* <form onSubmit={handleSubmit}> */}
                 <div>
                     <label >Name</label>
-                    <input type='text' require='true' onChange={e => setName(e.target.value)}></input>
+                    <input type='text' required='true' onChange={e => setName(e.target.value)}></input>
                 </div>
                 <div>
                     <label>Email Address</label>
-                    <input type='text' require='true' onChange={e => setEmail(e.target.value)}></input>
+                    <input type='email' required='true' onChange={e => setEmail(e.target.value)}></input>
                 </div>
                 <div>
                     <label>Password</label>
-                    <input type='password' require='true' onChange={e => setPassword(e.target.value)}></input>
+                    <input type='password' required='true' onChange={e => setPassword(e.target.value)}></input>
                 </div>
                 <div>
                     <label>Zipcode</label>
-                    <input type='text' require='true' onChange={e => setZipcode(e.target.value)}></input>
+                    <input type='text' required='true' onChange={e => setZipcode(e.target.value)}></input>
                 </div>
                 {/* <div>
                     <label>Photos</label>
