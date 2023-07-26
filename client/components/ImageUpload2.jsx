@@ -10,6 +10,11 @@ const ImageUpload2 = forwardRef((props, ref) => {
   const [ files, setFiles ] = useState(null);
   const [ imageCount, setImageCount ] = useState(0);
   
+  //get image src from parent component
+  useEffect(() => {
+    // console.log('parent file: ', props.file)
+    setFiles(props.file);
+  }, [props.file])
 
    // handle drag events
    const handleDrag = function(e) {
@@ -26,7 +31,6 @@ const ImageUpload2 = forwardRef((props, ref) => {
 
   // triggers when file is dropped
   const handleDrop = function(e, imageCount, index) {
-    console.log('handleDrop activated')
     
     e.preventDefault();
     e.stopPropagation();
@@ -39,12 +43,12 @@ const ImageUpload2 = forwardRef((props, ref) => {
 
       setFiles(newFile); 
       setImageCount(imageCount);
+      props.onFileUpdate(newFile, props.id);
 
       //updates imageCount in parent component if it exists
       if (props.updateImageCount) {
         props.updateImageCount(imageCount);
       }
-      //need to update ImageUploadContainer state
     }
   };
 
@@ -61,11 +65,11 @@ const ImageUpload2 = forwardRef((props, ref) => {
   
       setFiles(newFile); 
       setImageCount(imageCount);
+      props.onFileUpdate(newFile, props.id);
       //updates parent component imageCount state if it exists
       if (props.updateImageCount) {
         props.updateImageCount(imageCount);
       }
-      //need to update ImageUploadContainer state
     }
   };
 
@@ -82,7 +86,8 @@ const ImageUpload2 = forwardRef((props, ref) => {
     // delete imageObj[index];
     setFiles(null); 
     setImageCount(--imageCount);
-    console.log(imageCount);
+    props.onFileUpdate(null, props.id);
+    // console.log(imageCount);
     //updates imageCount in parent component if it exists
     if (props.updateImageCount) {
       props.updateImageCount(--imageCount);
@@ -90,9 +95,16 @@ const ImageUpload2 = forwardRef((props, ref) => {
     //need to update ImageUploadContainer state
   }
   //image_index={key}
+  let imageDisplayed;
+  if (files !== null) {
+    imageDisplayed = typeof files === 'string' ? files : URL.createObjectURL(files);
+  }
+  // const imageDisplayed = typeof files === 'string' ? files : URL.createObjectURL(files);
+  // console.log(imageDisplayed);
+
   const ImageComponent = files !== null ? (
     <div key={props.id} className="image-wrapper">
-      <img className='image-preview' src={URL.createObjectURL(files)}/>
+      <img className='image-preview' src={imageDisplayed}/>
       <button className='deleteImage' onClick={e => removeImage(e, imageCount)}>x</button>
     </div>
   ) : (

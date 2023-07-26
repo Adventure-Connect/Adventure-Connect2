@@ -68,7 +68,7 @@ const Signup = () => {
                 body: JSON.stringify(info)
             })
             if (imageUploadRef.current) {
-                imageUploadRef.current.handleFileUpload(e, email. imageCount);
+                imageUploadRef.current.handleFileUpload(e, email);
             }
             navigate('/dashboard', {state:{email: email}});
             return;
@@ -80,7 +80,7 @@ const Signup = () => {
         
     }
 
-    
+    //button to remove interest from selected list
     const removeInterest = (e) => {
         e.preventDefault();
         let interest = e.target.parentElement.getAttribute('interest');  
@@ -93,16 +93,19 @@ const Signup = () => {
         console.log(interests);
     }
     
+    //rotating colors for the background of the interest labels
     const rotatingColors = ['#877767', '#b98d5c', '#2c2b27', '#a09487', '#c7a57e', '#595855'];
-    const interestLabels = [];
     let colorIndex = 0;
-    interests.forEach(interest => {
+    
+    //push selected interests into interestLabels array to display, applying background color
+    const interestLabels = [];
+    interests.forEach((interest, index) => {
         const bgColor = rotatingColors[colorIndex % rotatingColors.length];
         const labelStyle = { backgroundColor: bgColor };
         interestLabels.push(
-            <div className="interest-label" interest={interest} style={labelStyle}>
+            <div className="interest-label" key={index} interest={interest} style={labelStyle}>
                 {interest}
-                <button className='deleteInterest' onClick={e => removeInterest(e)}>x</button>
+                <button className='deleteInterest' key={index} onClick={e => removeInterest(e)}>x</button>
             </div>);
         colorIndex++;
     })
@@ -110,32 +113,26 @@ const Signup = () => {
     return (
         <div className="signup-container">
                 <div className="form-group">
-                    <label clasName="form-label" >Name</label>
+                    <label className="form-label" >Name</label>
                     <input className="form-input" type='text' required='true' onChange={e => setName(e.target.value)}></input>
                 </div>
                 <div className="form-group">
-                    <label clasName="form-label" >Email Address</label>
+                    <label className="form-label" >Email Address</label>
                     <input type='email' required='true' onChange={e => setEmail(e.target.value)}></input>
                 </div>
                 <div className="form-group">
-                    <label clasName="form-label" >Password</label>
+                    <label className="form-label" >Password</label>
                     <input type='password' required='true' onChange={e => setPassword(e.target.value)}></input>
                 </div>
                 <div className="form-group">
-                    <label clasName="form-label" >Zipcode</label>
+                    <label className="form-label" >Zipcode</label>
                     <input type='text' required='true' onChange={e => setZipcode(e.target.value)}></input>
                 </div>
-                {/* <div>
-                    <label>Photos</label>
-                    <div style={{display: 'grid', gridTemplate: '1fr 1fr 1fr', textAlign: 'center'}}>
-                        {imageSelector}
-                    </div>
-                </div> */}
                 <div>
-                    <ImageUpload email={email} ref={imageUploadRef} updateImageCount={updateImageCount} imageCount={imageCount}/>
+                    <ImageUpload ref={imageUploadRef}/>
                 </div>
                 <div className="form-group">
-                    <label clasName="form-label" >Interests</label>
+                    <label className="form-label" >Interests</label>
                     <Select
                         className="select-input"
                         placeholder=''
