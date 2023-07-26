@@ -81,15 +81,15 @@ const Login = () => {
       state: { currentUser: currentUser, authenticated: authenticated },
     });
   }
-  const verifyAuthentication = () => {
-    if (authenticated) {
-      navigate("/userprofile", {
-        state: { currentUser: currentUser, authenticated: authenticated },
-      });
-    } else {
-      console.log("user credentials not accepted");
-    }
-  };
+  // const verifyAuthentication = () => {
+  //   if (authenticated) {
+  //     navigate("/userprofile", {
+  //       state: { currentUser: currentUser, authenticated: authenticated },
+  //     });
+  //   } else {
+  //     console.log("user credentials not accepted");
+  //   }
+  // };
 
   //sends request to backend to verify user credentials
   const handleSubmit = async (e) => {
@@ -127,14 +127,11 @@ const Login = () => {
       <h1>
         Adventure<br></br>Connect
       </h1>
-      <h1>
-        Adventure<br></br>Connect
-      </h1>
       <h2>Find Friends Outdoors</h2>
       <div id="login_container">
         <form onSubmit={handleSubmit}>
           <label>
-            <p>Username</p>
+            <p>Email</p>
             <input type="text" onChange={(e) => setUserEmail(e.target.value)} />
           </label>
           <label>

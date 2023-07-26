@@ -8,6 +8,7 @@ import "../styles/Dashboard.css";
 import ProfileCard from "./ProfileCard";
 import axios from "axios";
 
+
 const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
@@ -58,6 +59,7 @@ const Dashboard = () => {
   });
 
   return (
+
     <div className="dashboard-container">
       <Carousel
         responsive={responsive}
