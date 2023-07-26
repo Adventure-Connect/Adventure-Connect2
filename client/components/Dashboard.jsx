@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // import Carousel from "./Carousel"
 // import CarouselItem from "./CarouselItem";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import testImg from "../images/pika.jpg";
 import "../styles/Dashboard.css";
+import ProfileCard from "./ProfileCard";
+import axios from "axios";
 
 
 const responsive = {
@@ -28,34 +30,47 @@ const responsive = {
 };
 
 const Dashboard = () => {
+  const [usersArr, setUsersArr] = useState([]);
+
+  const getUsers = async () => {
+    const users = await axios.get("http://localhost:3000/api/api/getUsers");
+    console.log(users.data);
+    setUsersArr(users.data);
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const renderArr = usersArr.map((elem) => {
+    const interests = elem.interests.map((interest) => {
+      return <div>{interest}</div>;
+    });
+
+    return (
+      <ProfileCard
+        profilePhoto={elem.profilePhoto}
+        name={elem.name}
+        bio={elem.bio}
+        interests={interests}
+        email={elem.email}
+      />
+    );
+  });
+
   return (
-    <div>
-      
-      <Carousel className="carousel-container" responsive={responsive}>
-        <div>
-          <div>Item1</div>
-          <img className="carousel-img" src={testImg} />
-        </div>
-        <div>
-          <div>Item2</div>
-          <img className="carousel-img" src={testImg} />
-        </div>
-        <div>
-          <div>Item3</div>
-          <img className="carousel-img" src={testImg} />
-        </div>
-        <div>
-          <div>Item4</div>
-          <img className="carousel-img" src={testImg} />
-        </div>
-        <div>
-          <div>Item5</div>
-          <img className="carousel-img" src={testImg} />
-        </div>
-        <div>
-          <div>Item6</div>
-          <img className="carousel-img" src={testImg} />
-        </div>
+
+    <div className="dashboard-container">
+      <Carousel
+        responsive={responsive}
+        containerClass="container"
+        swipeable={false}
+        draggable={false}
+        // showDots={true}
+        ssr={true} // means to render carousel on server-side.
+        infinite={true}
+      >
+        {renderArr}
       </Carousel>
     </div>
   );

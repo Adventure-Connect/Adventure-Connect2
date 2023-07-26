@@ -1,51 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import "../styles/UserSpecific.css";
 
 const UserSpecific = () => {
+  const location = useLocation();
+  console.log(location);
+  console.log(location.state.email);
 
-    const [ userView, setUserView ] = useState();
+  const [userPhotos, setUserPhotos] = useState([]);
 
-    // useEffect(() => {
-    //     async function getUser() {
-    //         try {
-    //             // refactor line 10 to the correct endpoint for getting specific user information
-    //             const data = await fetch(`http://localhost:8080/api/${props.currentUser}`, {
-    //                 method: 'GET',
-    //             })
-    //             const json = await data.json();
-    //             setUserView(json);
-    //             return;
-    //         }
-    //         catch (err) {
-    //             alert(`An error has occurred! ${err.message}`);
-    //             return err;
-    //         }
-    //     };
-        
-    //     getUser();
-    // }, []);
+  const getUserPhotos = async () => {
+    const userPhotos = await axios.get(
+      `http://localhost:3000/api/getImages/${location.state.email}`
+    );
+    console.log(userPhotos.data);
+    setUserPhotos(userPhotos.data);
+  };
 
-    // just for testing; will need to be replaced with actual image data pulled from mongodb later
-    const images = [
-        "https://www.ispo.com/sites/default/files/2017-10/big-deal_0_0.jpeg",
-        "https://s3.amazonaws.com/images.gearjunkie.com/uploads/2022/06/GJ-Alex-Honnold-Podcast-Feature-1380x920.jpg",
-        "https://image-cdn.essentiallysports.com/wp-content/uploads/image_2022-12-13_224049157.png?width=600",
-        "https://s3.amazonaws.com/www.explorersweb.com/wp-content/uploads/2023/01/04180652/Screen-Shot-2023-01-04-at-12.06.21-PM.jpg"
-    ]
+  useEffect(() => {
+    getUserPhotos();
+  }, []);
 
-    const carousel = images.map((URL, index) => (
-        <div className="slide">
-          <img src={URL} key={index} />
-        </div>
-    ))
+  const renderPhotos = userPhotos.map((elem) => {
+    return <img className="user-images" src={elem.image} />;
+  });
 
-    return (
-        <div className="box">
-          <Carousel>
-            {carousel}
-          </Carousel>
-        </div>
-      );
-}
+  return (
+    <div className="user-specific-container">
+      <div>{location.state.name}</div>
+      <div>{location.state.email}</div>
+      <div>{location.state.bio}</div>
+      <div>{renderPhotos}</div>
+    </div>
+  );
+};
 
 export default UserSpecific;
