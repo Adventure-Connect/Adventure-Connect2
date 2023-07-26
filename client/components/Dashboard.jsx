@@ -10,6 +10,7 @@ import Notification from "./Notification";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
+
 const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
@@ -63,6 +64,7 @@ const Dashboard = () => {
   });
 
   return (
+
     <div className="dashboard-container">
       <Notification />
       <Carousel
