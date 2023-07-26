@@ -1,14 +1,13 @@
-.carousel-img {
+.user-images {
   width: 200px;
   height: 200px;
 }
 
-.dashboard-container {
-  /* border: 2px solid black;
+.user-specific-container {
+  border: 2px solid black;
   position: absolute;
   top: 50%;
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
-  max-width: 50rem; */
 }

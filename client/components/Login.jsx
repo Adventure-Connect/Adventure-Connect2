@@ -3,8 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { useContext } from "react";
 import { RecoveryContext } from "../App";
 
-
-
 const Login = () => {
   const navigate = useNavigate();
   const [authenticated, setAuthenticated] = useState(false);
@@ -83,15 +81,15 @@ const Login = () => {
       state: { currentUser: currentUser, authenticated: authenticated },
     });
   }
-  const verifyAuthentication = () => {
-    if (authenticated) {
-      navigate("/userprofile", {
-        state: { currentUser: currentUser, authenticated: authenticated },
-      });
-    } else {
-      console.log("user credentials not accepted");
-    }
-  };
+  // const verifyAuthentication = () => {
+  //   if (authenticated) {
+  //     navigate("/userprofile", {
+  //       state: { currentUser: currentUser, authenticated: authenticated },
+  //     });
+  //   } else {
+  //     console.log("user credentials not accepted");
+  //   }
+  // };
 
   //sends request to backend to verify user credentials
   const handleSubmit = async (e) => {
@@ -114,7 +112,7 @@ const Login = () => {
         setLoginError(true);
       } else if (json.message === "Login successful!") {
         setAuthenticated(true);
-        navigate("/userprofile", {
+        navigate("/dashboard", {
           state: { currentUser: currentUser, authenticated: authenticated },
         });
       }
@@ -129,14 +127,11 @@ const Login = () => {
       <h1>
         Adventure<br></br>Connect
       </h1>
-      <h1>
-        Adventure<br></br>Connect
-      </h1>
       <h2>Find Friends Outdoors</h2>
       <div id="login_container">
         <form onSubmit={handleSubmit}>
           <label>
-            <p>Username</p>
+            <p>Email</p>
             <input type="text" onChange={(e) => setUserEmail(e.target.value)} />
           </label>
           <label>
