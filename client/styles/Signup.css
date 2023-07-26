@@ -1,0 +1,114 @@
+/* General styles */
+body {
+  font-family: 'Roboto Medium', sans-serif;
+  background-color: #f0f0f0;
+  color: #2c2b27;
+}
+
+.signup-container {
+  /* Adjust container styles */
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form input styles */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #2c2b27;
+}
+
+.select-input {
+  /* Adjust select input styles */
+  width: 100%;
+  font-size: 14px;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #2c2b27;
+}
+
+/* Interest labels and delete button */
+#interestBox {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+
+#interestBox div {
+  display: inline-block;
+  background-color: #877767;
+  color: #ffffff;
+  padding: 5px 10px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.interest-label {
+  display: inline-block;
+  color: #ffffff;
+  padding: 5px 10px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.deleteInterest {
+  background-color: transparent;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 5px;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
+/* Bio textarea styles */
+.form-input[type='text'] {
+  /* Use the same styles as .form-input, or create specific styles */
+}
+
+/* Primary button styles */
+.btn {
+  /* Adjust common button styles */
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  /* Apply primary button styles */
+  background-color: #2c2b27;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  /* Apply on hover styles for primary button */
+  background-color: #4b4b47;
+}

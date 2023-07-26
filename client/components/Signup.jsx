@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
 import Select from 'react-select';
 import ImageUpload from './ImageUpload';
+import '../styles/Signup.css';
+
 
 const Signup = () => {
 
@@ -91,29 +93,36 @@ const Signup = () => {
         console.log(interests);
     }
     
+    const rotatingColors = ['#877767', '#b98d5c', '#2c2b27', '#a09487', '#c7a57e', '#595855'];
     const interestLabels = [];
+    let colorIndex = 0;
     interests.forEach(interest => {
-        interestLabels.push(<div interest={interest}>{interest}<button className='deleteInterest' onClick={e => removeInterest(e)}>x</button></div>);
+        const bgColor = rotatingColors[colorIndex % rotatingColors.length];
+        const labelStyle = { backgroundColor: bgColor };
+        interestLabels.push(
+            <div className="interest-label" interest={interest} style={labelStyle}>
+                {interest}
+                <button className='deleteInterest' onClick={e => removeInterest(e)}>x</button>
+            </div>);
+        colorIndex++;
     })
 
     return (
-        <div>
-            {/* <form onSubmit={handleSubmit} encType='multipart/form-data'> */}
-            {/* <form onSubmit={handleSubmit}> */}
-                <div>
-                    <label >Name</label>
-                    <input type='text' required='true' onChange={e => setName(e.target.value)}></input>
+        <div className="signup-container">
+                <div className="form-group">
+                    <label clasName="form-label" >Name</label>
+                    <input className="form-input" type='text' required='true' onChange={e => setName(e.target.value)}></input>
                 </div>
-                <div>
-                    <label>Email Address</label>
+                <div className="form-group">
+                    <label clasName="form-label" >Email Address</label>
                     <input type='email' required='true' onChange={e => setEmail(e.target.value)}></input>
                 </div>
-                <div>
-                    <label>Password</label>
+                <div className="form-group">
+                    <label clasName="form-label" >Password</label>
                     <input type='password' required='true' onChange={e => setPassword(e.target.value)}></input>
                 </div>
-                <div>
-                    <label>Zipcode</label>
+                <div className="form-group">
+                    <label clasName="form-label" >Zipcode</label>
                     <input type='text' required='true' onChange={e => setZipcode(e.target.value)}></input>
                 </div>
                 {/* <div>
@@ -125,9 +134,10 @@ const Signup = () => {
                 <div>
                     <ImageUpload email={email} ref={imageUploadRef} updateImageCount={updateImageCount} imageCount={imageCount}/>
                 </div>
-                <div>
-                    <label>Interests</label>
+                <div className="form-group">
+                    <label clasName="form-label" >Interests</label>
                     <Select
+                        className="select-input"
                         placeholder=''
                         options={activities}
                         onChange={opt => {
@@ -145,7 +155,7 @@ const Signup = () => {
                     </div>
                 </div>
                 
-                <div>
+                <div className="form-group">
                     <label>Tell us more about yourself</label>
                     <br></br>
                     <input type='text' placeholder='Favorite outdoor memories
@@ -153,7 +163,7 @@ const Signup = () => {
                     </input>
                 </div>
                 {/* <button className='btn' type='submit'>Create Account</button> */}
-                <button className='btn' onClick={handleSubmit}>Create Account</button>
+                <button className='btn btn-primary' onClick={handleSubmit}>Create Account</button>
             {/* </form> */}
         </div>
     )
