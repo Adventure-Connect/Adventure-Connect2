@@ -6,6 +6,7 @@ const { Storage } = require("@google-cloud/storage");
 const { format } = require("util");
 const multer = require("multer");
 const nodemailer = require("nodemailer");
+const { findOneAndUpdate } = require("../models/userModel");
 
 // const upload =  multer({
 //   storage: multer.memoryStorage(),
@@ -365,6 +366,81 @@ userController.updatePassword = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: "Server error!" });
   }
+};
+
+userController.sendFriendRequest = async (req, res) => {
+  const { name, email, currentUserEmail } = req.body;
+  console.log("this is the cookie", req.cookies);
+  const currentUser = await Users.findOne({ email: currentUserEmail });
+  const user = await Users.findOne({ name, email });
+
+  await Users.findOneAndUpdate(
+    { name, email },
+    {
+      friendRequests: [
+        ...user.friendRequests,
+        {
+          user_id: currentUser._id,
+          name: currentUser.name,
+          profilePhoto: currentUser.profilePhoto,
+        },
+      ],
+    }
+  );
+  res.sendStatus(200);
+};
+
+userController.getFriendRequest = async (req, res) => {
+  const email = req.params.email;
+  console.log("IDK WHY", email);
+  const user = await Users.findOne({ email });
+  console.log("friend request", user.friendRequests);
+  res.status(200).json({ data: user.friendRequests });
+};
+
+userController.connections = async (req, res) => {
+  const { name, currentUser } = req.body;
+  const currUser = await Users.findOne({ email: currentUser });
+  const reqUser = await Users.findOne({ name });
+  const currUserConnections = currUser.connections;
+  const reqUserConnections = reqUser.connections;
+  const newFriendRequest = currUser.friendRequests.filter(
+    (elem) => elem.name !== reqUser.name
+  );
+
+  const retDoc = await Users.findOneAndUpdate(
+    { email: currentUser },
+    {
+      connections: [
+        ...currUserConnections,
+        {
+          user_id: reqUser._id,
+          name: reqUser.name,
+          profilePhoto: reqUser.profilePhoto,
+        },
+      ],
+      friendRequests: newFriendRequest,
+    },
+    { new: true }
+  );
+
+  await Users.findOneAndUpdate(
+    { name },
+    {
+      connections: [
+        ...reqUserConnections,
+        {
+          user_id: currUser._id,
+          name: currUser.name,
+          profilePhoto: currUser.profilePhoto,
+        },
+      ],
+    }
+  );
+
+  console.log("Successful");
+  console.log(retDoc);
+  res.status(200).json({ data: retDoc.friendRequests });
 };
 
 module.exports = userController;

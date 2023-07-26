@@ -6,6 +6,8 @@ import "react-multi-carousel/lib/styles.css";
 import testImg from "../images/pika.jpg";
 import "../styles/Dashboard.css";
 import ProfileCard from "./ProfileCard";
+import Notification from "./Notification";
+import { useCookies } from "react-cookie";
 import axios from "axios";
 
 const responsive = {
@@ -29,6 +31,7 @@ const responsive = {
 };
 
 const Dashboard = () => {
+  const [cookies, setCookie] = useCookies();
   const [usersArr, setUsersArr] = useState([]);
 
   const getUsers = async () => {
@@ -46,19 +49,22 @@ const Dashboard = () => {
       return <div>{interest}</div>;
     });
 
-    return (
-      <ProfileCard
-        profilePhoto={elem.profilePhoto}
-        name={elem.name}
-        bio={elem.bio}
-        interests={interests}
-        email={elem.email}
-      />
-    );
+    if (cookies.currentEmail !== elem.email) {
+      return (
+        <ProfileCard
+          profilePhoto={elem.profilePhoto}
+          name={elem.name}
+          bio={elem.bio}
+          interests={interests}
+          email={elem.email}
+        />
+      );
+    }
   });
 
   return (
     <div className="dashboard-container">
+      <Notification />
       <Carousel
         responsive={responsive}
         containerClass="container"

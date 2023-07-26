@@ -79,4 +79,18 @@ router.get("/api/getUsers", userController.getProfiles, (req, res) => {
   res.json(usersToDisplay);
 });
 
+router.post(
+  "/friendRequest",
+  userController.sendFriendRequest,
+  (req, res) => {}
+);
+
+router.get(
+  "/friendRequest/:email",
+  userController.getFriendRequest,
+  (req, res) => {}
+);
+
+router.post("/accept", userController.connections, (req, res) => {});
+
 module.exports = router;

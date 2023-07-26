@@ -1,0 +1,50 @@
+.notification-container {
+  border: 2px solid blue;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  max-width: 20rem;
+  padding: 1.2rem;
+}
+
+.user-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.user-account {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon-img {
+  width: 2rem;
+  height: 2rem;
+}
+
+.notification-img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+
+.icon-container {
+  position: relative;
+  /* border: 2px solid red; */
+}
+
+.num-request {
+  position: absolute;
+  top: 0;
+  left: 0.8rem;
+  background-color: blue;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: white;
+}
