@@ -189,6 +189,20 @@ userController.updateUser = async (req, res, next) => {
   return next();
 };
 
+userController.updateUserInfo = async (req, res, next) => {
+  try {
+    console.log('updateUserInfo firing');
+
+    const {name, location, bio, email} = req.body;
+    const updatedUser = await Users.findOneAndUpdate({email: email}, {$set:{name: name, zipCode: location, bio: bio}});
+    return next();
+  } catch (error) {
+    console.error(error);
+
+  }
+  return next();
+};
+
 userController.getProfiles = async (req, res, next) => {
   try {
     //grab zipCode from the cookie and convert to number to match schema
