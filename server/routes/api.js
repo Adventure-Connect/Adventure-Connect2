@@ -80,7 +80,8 @@ router.get("/api/getUsers", userController.getProfiles, (req, res) => {
 });
 
 router.put('/account', userController.updateUserInfo, (req, res) => {
-  res.end();
+  console.log('/account route firing')
+  res.status(200).end();
 })
 
 module.exports = router;
