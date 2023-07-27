@@ -1,35 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { useCookies } from "react-cookie";
+import React, {useState} from "react";
 
 const UserProfile = () => {
-  // const email = "renee.toscan@outlook.com";
-  const [email, setEmail] = useState("");
-  const [userName, setUserName] = useState("ex: Michael Fish");
-  const [userLocation, setUserLocation] = useState(12345);
-  const [userBio, setUserBio] = useState("Tell us a bit more about yourself!");
-  const [cookies, setCookie] = useCookies();
-
-  useEffect(() => {
-    setEmail(cookies.currentEmail);
-    console.log(email);
-  }, [userBio]);
-
+  const [userInfo, setUserInfo] = useState({
+    email: "renee.toscan@outlook.com",
+    name: "ex: Michael Fish",
+    location: 12345,
+    bio: "Tell us a bit more about yourself!"
+  })
   const updateProfile = async () => {
-    const userInfo = {
-      email: email,
-      name: userName,
-      location: userLocation,
-      bio: userBio,
-    };
+    console.log("updateProfile firing");
+    // const userInfo = {
+    //   email: "renee.toscan@outlook.com",
+    //   name: "Renee Toscan",
+    //   location: 95117,
+    //   bio: "My name is Rod and I like to party",
+    // };
 
     try {
-      await fetch("http://localhost:3000/api/account", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userInfo),
-      });
+      console.log(userInfo);
+      // await fetch("http://localhost:3000/api/account", {
+      //   method: "PUT",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(userInfo),
+      // });
     } catch (err) {
       console.log("an error occurred");
     }
@@ -41,25 +36,14 @@ const UserProfile = () => {
       <p>This information will appear on your public profile</p>
 
       <h3>Name (required)</h3>
-      <input
-        type="text"
-        name="name"
-        id="name"
-        placeholder={userName}
-        onChange={(event) => {
-          setUserName(event.target.value);
-        }}
-      />
+      <input type="text" name="name" id="name" placeholder="asdfasdf" />
 
       <h3>Your location (required)</h3>
       <input
         type="text"
         name="zip code"
         id="zip-code"
-        placeholder={userLocation}
-        onChange={(event) => {
-          setUserLocation(event.target.value);
-        }}
+        placeholder="ex: 12345"
       />
 
       <h3>Bio</h3>
@@ -68,10 +52,7 @@ const UserProfile = () => {
         id="bio"
         cols="30"
         rows="10"
-        placeholder={userBio}
-        onChange={(event) => {
-          setUserBio(event.target.value);
-        }}
+        placeholder="Tell us a bit about yourself!"
       ></textarea>
       <button onClick={updateProfile}>Update Profile</button>
     </>
