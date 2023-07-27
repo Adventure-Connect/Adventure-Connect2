@@ -22,6 +22,13 @@ const UserProfile = () => {
     //   location: 95117,
     //   bio: "My name is Rod and I like to party",
     // };
+    console.log("updateProfile firing");
+    // const userInfo = {
+    //   email: "renee.toscan@outlook.com",
+    //   name: "Renee Toscan",
+    //   location: 95117,
+    //   bio: "My name is Rod and I like to party",
+    // };
 
     try {
       await fetch("http://localhost:3000/api/account", {
