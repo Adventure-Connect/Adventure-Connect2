@@ -1,43 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { useCookies } from "react-cookie";
-import AccountInterests from "./AccountInterests";
+import React, {useState} from "react";
 
 const UserProfile = () => {
-  const [email, setEmail] = useState();
-  const [userName, setUserName] = useState();
-  const [userLocation, setUserLocation] = useState();
-  const [userBio, setUserBio] = useState();
-  const [cookies, setCookie] = useCookies();
-  const [status, setStatus] = useState('');
-
-  useEffect(() => {
-    setEmail(cookies.currentEmail);
-  }, [userBio]);
-
+  const [userInfo, setUserInfo] = useState({
+    email: "renee.toscan@outlook.com",
+    name: "ex: Michael Fish",
+    location: 12345,
+    bio: "Tell us a bit more about yourself!"
+  })
   const updateProfile = async () => {
-    const userInfo = {
-      email: email,
-      name: userName,
-      location: userLocation,
-      bio: userBio,
-    };
+    console.log("updateProfile firing");
+    // const userInfo = {
+    //   email: "renee.toscan@outlook.com",
+    //   name: "Renee Toscan",
+    //   location: 95117,
+    //   bio: "My name is Rod and I like to party",
+    // };
 
     try {
-      const data = await fetch("http://localhost:3000/api/account", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userInfo),
-      });
-      const json = await data.json();
-      console.log(json);
-      if(cookies.currentEmail === undefined) {
-        setStatus("Error occurred. Please be sure you're logged in.");
-      }else {
-        setStatus(json.message);
-      }
-      
+      console.log(userInfo);
+      // await fetch("http://localhost:3000/api/account", {
+      //   method: "PUT",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(userInfo),
+      // });
     } catch (err) {
       console.log("an error occurred");
     }
@@ -49,15 +36,7 @@ const UserProfile = () => {
       <p>This information will appear on your public profile</p>
 
       <h3>Name (required)</h3>
-      <input
-        type="text"
-        name="name"
-        id="name"
-        placeholder="ex: Michael Fish"
-        onChange={(event) => {
-          setUserName(event.target.value);
-        }}
-      />
+      <input type="text" name="name" id="name" placeholder="asdfasdf" />
 
       <h3>Your location (required)</h3>
       <input
@@ -65,9 +44,6 @@ const UserProfile = () => {
         name="zip code"
         id="zip-code"
         placeholder="ex: 12345"
-        onChange={(event) => {
-          setUserLocation(event.target.value);
-        }}
       />
 
       <h3>Bio</h3>
@@ -76,18 +52,9 @@ const UserProfile = () => {
         id="bio"
         cols="30"
         rows="10"
-        placeholder="Tell us a bit more about yourself!"
-        onChange={(event) => {
-          setUserBio(event.target.value);
-        }}
+        placeholder="Tell us a bit about yourself!"
       ></textarea>
-      {status && (
-            <p>{status}
-            </p>
-          )}
       <button onClick={updateProfile}>Update Profile</button>
-
-      <AccountInterests />
     </>
   );
 };
