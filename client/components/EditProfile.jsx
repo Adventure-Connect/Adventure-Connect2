@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
-import AccountInterests from "./AccountInterests";
 
 const UserProfile = () => {
-  const [email, setEmail] = useState();
-  const [userName, setUserName] = useState();
-  const [userLocation, setUserLocation] = useState();
-  const [userBio, setUserBio] = useState();
+  // const email = "renee.toscan@outlook.com";
+  const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("ex: Michael Fish");
+  const [userLocation, setUserLocation] = useState(12345);
+  const [userBio, setUserBio] = useState("Tell us a bit more about yourself!");
   const [cookies, setCookie] = useCookies();
-  const [status, setStatus] = useState('');
 
   useEffect(() => {
     setEmail(cookies.currentEmail);
+    console.log(email);
   }, [userBio]);
 
   const updateProfile = async () => {
@@ -23,21 +23,13 @@ const UserProfile = () => {
     };
 
     try {
-      const data = await fetch("http://localhost:3000/api/account", {
+      await fetch("http://localhost:3000/api/account", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(userInfo),
       });
-      const json = await data.json();
-      console.log(json);
-      if(cookies.currentEmail === undefined) {
-        setStatus("Error occurred. Please be sure you're logged in.");
-      }else {
-        setStatus(json.message);
-      }
-      
     } catch (err) {
       console.log("an error occurred");
     }
@@ -53,7 +45,7 @@ const UserProfile = () => {
         type="text"
         name="name"
         id="name"
-        placeholder="ex: Michael Fish"
+        placeholder={userName}
         onChange={(event) => {
           setUserName(event.target.value);
         }}
@@ -64,7 +56,7 @@ const UserProfile = () => {
         type="text"
         name="zip code"
         id="zip-code"
-        placeholder="ex: 12345"
+        placeholder={userLocation}
         onChange={(event) => {
           setUserLocation(event.target.value);
         }}
@@ -76,18 +68,12 @@ const UserProfile = () => {
         id="bio"
         cols="30"
         rows="10"
-        placeholder="Tell us a bit more about yourself!"
+        placeholder={userBio}
         onChange={(event) => {
           setUserBio(event.target.value);
         }}
       ></textarea>
-      {status && (
-            <p>{status}
-            </p>
-          )}
       <button onClick={updateProfile}>Update Profile</button>
-
-      <AccountInterests />
     </>
   );
 };
