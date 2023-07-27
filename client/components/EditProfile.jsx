@@ -2,42 +2,40 @@ import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 
 const UserProfile = () => {
-  // const email = "renee.toscan@outlook.com";
-  const [email, setEmail] = useState("");
-  const [userName, setUserName] = useState("ex: Michael Fish");
-  const [userLocation, setUserLocation] = useState(12345);
-  const [userBio, setUserBio] = useState("Tell us a bit more about yourself!");
+  const [email, setEmail] = useState();
+  const [userName, setUserName] = useState();
+  const [userLocation, setUserLocation] = useState();
+  const [userBio, setUserBio] = useState();
   const [cookies, setCookie] = useCookies();
+  const [status, setStatus] = useState("");
 
   useEffect(() => {
     setEmail(cookies.currentEmail);
-    console.log(email);
   }, [userBio]);
 
   const updateProfile = async () => {
-    console.log("updateProfile firing");
-    // const userInfo = {
-    //   email: "renee.toscan@outlook.com",
-    //   name: "Renee Toscan",
-    //   location: 95117,
-    //   bio: "My name is Rod and I like to party",
-    // };
-    console.log("updateProfile firing");
-    // const userInfo = {
-    //   email: "renee.toscan@outlook.com",
-    //   name: "Renee Toscan",
-    //   location: 95117,
-    //   bio: "My name is Rod and I like to party",
-    // };
+    const userInfo = {
+      email: email,
+      name: userName,
+      location: userLocation,
+      bio: userBio,
+    };
 
     try {
-      await fetch("http://localhost:3000/api/account", {
+      const data = await fetch("http://localhost:3000/api/account", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(userInfo),
       });
+      const json = await data.json();
+      console.log(json);
+      if (cookies.currentEmail === undefined) {
+        setStatus("Error occurred. Please be sure you're logged in.");
+      } else {
+        setStatus(json.message);
+      }
     } catch (err) {
       console.log("an error occurred");
     }
@@ -53,7 +51,7 @@ const UserProfile = () => {
         type="text"
         name="name"
         id="name"
-        placeholder={userName}
+        placeholder="ex: Michael Fish"
         onChange={(event) => {
           setUserName(event.target.value);
         }}
@@ -64,7 +62,7 @@ const UserProfile = () => {
         type="text"
         name="zip code"
         id="zip-code"
-        placeholder={userLocation}
+        placeholder="ex: 12345"
         onChange={(event) => {
           setUserLocation(event.target.value);
         }}
@@ -76,11 +74,15 @@ const UserProfile = () => {
         id="bio"
         cols="30"
         rows="10"
-        placeholder={userBio}
+        placeholder="Tell us a bit more about yourself!"
         onChange={(event) => {
           setUserBio(event.target.value);
         }}
       ></textarea>
+      {status && (
+            <p>{status}
+            </p>
+          )}
       <button onClick={updateProfile}>Update Profile</button>
     </>
   );
