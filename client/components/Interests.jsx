@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import "../styles/Interests.css";
+// import "../styles/Interests.css";
 
 const Interests = () => {
   const [cookies, setCookie] = useCookies();
   const [interests, setInterests] = useState();
   const exampleInterests = ["hiking", "rollerskating"];
-  const colors = ["#877767", "#b98d5c"]
+  const colors = ["#877767", "#b98d5c"];
 
   useEffect(() => {
     displayCurrentInterests();
@@ -34,17 +34,18 @@ const Interests = () => {
     }
   };
 
-
-
   return (
     <div className="interests">
       <h1>Interests</h1>
       <h2>Your interests</h2>
       <div className="current-interests">
         <ul>
-          {interests && interests.map((interest) => (
-            <li key={interest} style={{backgroundColor: colors[1]}} >{interest}</li>
-          ))}
+          {interests &&
+            interests.map((interest) => (
+              <li key={interest} style={{ backgroundColor: colors[1] }}>
+                {interest}
+              </li>
+            ))}
         </ul>
       </div>
       <h2>Add more interests</h2>

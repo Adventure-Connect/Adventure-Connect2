@@ -1,5 +1,5 @@
 .profileCards {
-  max-width: 20rem;
+  max-width: 25rem;
   /* background-color: blue; */
   display: flex;
   flex-direction: column;
@@ -9,6 +9,8 @@
   gap: 0.6rem;
   border: 2px solid black;
   border-radius: 1.2rem;
+  margin-right: 2rem;
+  margin-left: 2rem;
 }
 
 .user-name {
@@ -18,4 +20,25 @@
 
 .interests {
   /* display: flex; */
+}
+
+.profile-btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 2.4rem;
+  background-color: #b98d5c;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.profile-btn:hover {
+  background-color: #c7a57e;
+}
+
+.interests {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
 }
