@@ -273,6 +273,39 @@ userController.updateUser = async (req, res, next) => {
   return next();
 };
 
+//this middleware is for when people are updating their information on the Edit Profile page
+userController.updateUserInfo = async (req, res, next) => {
+  try {
+    console.log('updateUserInfo firing');
+
+    const {name, location, bio, email} = req.body;
+    const updatedUser = await Users.findOneAndUpdate({email: email}, {$set:{name: name, zipCode: location, bio: bio}});
+    if(updatedUser === null) {
+      res.status(500).json({message: "Hmmm...we did not find you in our databas"})
+    }else {
+      res.status(200).json({message: "Your profile has been updated!"});
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({message: "We're experiencing technical difficulties. Please try again later."});
+  }
+  return next();
+};
+
+//this middleware is for when people are updating their information on the Edit Profile page
+userController.getInterests = async (req, res, next) => {
+  const email = req.query.email;
+  try {
+    console.log('getInterests firing');
+    const userInterests = await Users.findOne({email: email})
+    console.log(email);
+    res.status(200).json(userInterests.interests);
+  } catch (error) {
+    console.error(error);
+  }
+  return next();
+};
+
 userController.getProfiles = async (req, res, next) => {
   console.log("hello is this route being hit");
   try {
