@@ -6,6 +6,8 @@
   list-style: none;
 }
 
+
+
 li,
 a {
   color: pink;
@@ -47,6 +49,10 @@ a {
   background-color: aquamarine;
   color: black;
 } */
+
+* {
+  font-family: "Roboto", sans-serif;
+}
 
 .indicators {
   display: flex;

@@ -79,12 +79,26 @@ router.get("/api/getUsers", userController.getProfiles, (req, res) => {
   res.json(usersToDisplay);
 });
 
-router.put('/account', userController.updateUserInfo, (req, res) => {
+router.post(
+  "/friendRequest",
+  userController.sendFriendRequest,
+  (req, res) => {}
+);
+
+router.get(
+  "/friendRequest/:email",
+  userController.getFriendRequest,
+  (req, res) => {}
+);
+
+router.post("/accept", userController.connections, (req, res) => {});
+
+router.put("/account", userController.updateUserInfo, (req, res) => {
   res.end();
 });
 
-router.get('/interests', userController.getInterests, (req, res) => {
-  console.log('/interests firing');
+router.get("/interests", userController.getInterests, (req, res) => {
+  console.log("/interests firing");
   res.end();
 });
 
