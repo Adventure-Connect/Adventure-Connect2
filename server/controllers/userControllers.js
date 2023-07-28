@@ -30,7 +30,7 @@ const userController = {};
 //verifying user upon logging in, to be put in route for post to /api/login. if route is successful, redirect to show user page
 
 userController.verifyLogin = async (req, res, next) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   try {
     //find a user that has a matching email and password
@@ -76,7 +76,6 @@ userController.verifyLogin = async (req, res, next) => {
     // If an error occurs, send an error response
     res.status(500).json({ message: "Server error!" });
   }
-  return next();
 };
 
 // userController.test = (req, res, next) => {
