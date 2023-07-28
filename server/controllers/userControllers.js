@@ -54,7 +54,7 @@ userController.verifyLogin = async (req, res, next) => {
         httpOnly: false,
         overwrite: true,
       });
-      res.cookie("zipCode", JSON.stringify(user.zip_code), {
+      res.cookie("zipCode", JSON.stringify(user.zipCode), {
         httpOnly: false,
         overwrite: true,
       });
@@ -161,7 +161,7 @@ userController.uploadImages = (req, res) => {
   const upload = multer({
     storage: multer.memoryStorage(),
     limits: {
-      fileSize: 10 * 1024 * 1024, // no larger than 5mb, you can change as needed.
+      fileSize: 15 * 1024 * 1024, // no larger than 5mb, you can change as needed.
     },
     onError: function (err, next) {
       console.log("error", err);
@@ -270,11 +270,12 @@ userController.updateUser = async (req, res, next) => {
 };
 
 userController.getProfiles = async (req, res, next) => {
+  const zipCode = req.params.zip;
   console.log("hello is this route being hit");
   try {
     //grab zipCode from the cookie and convert to number to match schema
     // const zipCode = Number(req.cookies.zipCode);
-    const zipCode = 123456;
+    // const zipCode = 10001;
     //grab interests from the cookie, parse it from JSON format
     // const interests = JSON.parse(req.cookies.currentInterests);
     const interests = ["Climbing", "Hiking"];
@@ -394,7 +395,8 @@ userController.getFriendRequest = async (req, res) => {
   const email = req.params.email;
   console.log("IDK WHY", email);
   const user = await Users.findOne({ email });
-  console.log("friend request", user.friendRequests);
+  console.log("this is the user");
+  // console.log("friend request", user.friendRequests);
   res.status(200).json({ data: user.friendRequests });
 };
 

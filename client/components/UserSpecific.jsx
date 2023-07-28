@@ -43,11 +43,13 @@ const UserSpecific = () => {
 
   return (
     <div className="user-specific-container">
-      <div>{location.state.name}</div>
-      <div>{location.state.email}</div>
-      <div>{location.state.bio}</div>
-      <div>{renderPhotos}</div>
-      <button onClick={handleClick}>Connect with this User</button>
+      <div className="user-specific-name">{location.state.name}</div>
+      <div className="user-specific-email">{location.state.email}</div>
+      <div className="user-specific-bio">{location.state.bio}</div>
+      <div className="user-specific-grid">{renderPhotos}</div>
+      <button className="user-specific-btn" onClick={handleClick}>
+        Connect with this User
+      </button>
     </div>
   );
 };

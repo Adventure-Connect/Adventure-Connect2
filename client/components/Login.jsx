@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useContext } from "react";
 import { RecoveryContext } from "../App";
+import { useCookies } from "react-cookie";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const Login = () => {
   const [password, setPassword] = useState();
   const [userEmail, setUserEmail] = useState("");
   const { setOTP, setEmail } = useContext(RecoveryContext);
+  const [cookies, setCookie] = useCookies();
 
   //sends one time password when "forgot your password?" is clicked
   // const sendOtp = async () => {

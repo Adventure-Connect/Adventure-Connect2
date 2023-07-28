@@ -4,6 +4,7 @@ import { useCookies } from "react-cookie";
 import "../styles/Notification.css";
 import IconNotification from "../images/notification (1).png";
 import axios from "axios";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 
 function Notification() {
   const [cookies, setCookie] = useCookies();
@@ -21,7 +22,9 @@ function Notification() {
   };
 
   const handleClick = () => {
-    setIsOpen(!isOpen);
+    if (numRequest > 0) {
+      setIsOpen(!isOpen);
+    }
   };
 
   const handleAcceptClick = async (name) => {
@@ -43,8 +46,9 @@ function Notification() {
     return (
       <div className="user-account">
         <img className="notification-img" src={elem.profilePhoto} />
-        <div>{elem.name}</div>
+        <div className="user-account-name">{elem.name}</div>
         <button
+          className="accept-btn"
           onClick={() => {
             handleAcceptClick(elem.name);
           }}
@@ -58,10 +62,13 @@ function Notification() {
   return (
     <div className="notification-container">
       <div onClick={handleClick} className="icon-container">
-        <img className="icon-img" src={IconNotification} />
-        <div className="num-request">{numRequest}</div>
+        {/* <img className="icon-img" src={IconNotification} /> */}
+        <NotificationsActiveIcon fontSize="large" className="icon-img" />
+        {numRequest ? <div className="num-request">{numRequest}</div> : null}
       </div>
-      {isOpen ? <div className="user-container">{requestRenderArr}</div> : null}
+      {isOpen && numRequest ? (
+        <div className="user-container">{requestRenderArr}</div>
+      ) : null}
     </div>
   );
 }

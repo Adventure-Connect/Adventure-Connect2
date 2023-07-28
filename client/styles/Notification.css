@@ -1,27 +1,37 @@
 .notification-container {
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
   max-width: 20rem;
   padding: 1.2rem;
+  /* background-color: white; */
+  cursor: pointer;
 }
 
 .user-container {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1.2rem;
+  position: absolute;
+  top: 6rem;
+  right: 0.5rem;
+  background-color: #060b26;
+  z-index: 10;
+  padding: 1.2rem;
+  border-radius: 2rem;
+  color: white;
 }
 
 .user-account {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1.2rem;
 }
 
 .icon-img {
-  width: 2rem;
-  height: 2rem;
+  color: white;
 }
 
 .notification-img {
@@ -37,9 +47,9 @@
 
 .num-request {
   position: absolute;
-  top: 0;
-  left: 0.8rem;
-  background-color: blue;
+  top: -0.2rem;
+  left: 1rem;
+  background-color: red;
   width: 1.5rem;
   height: 1.5rem;
   display: flex;
@@ -47,4 +57,18 @@
   justify-content: center;
   border-radius: 50%;
   color: white;
+  font-weight: bold;
+}
+
+.accept-btn {
+  padding: 0.6rem 1.2rem;
+  background-color: white;
+  border: none;
+  border-radius: 1.2rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.user-account-name {
+  font-weight: bold;
 }
