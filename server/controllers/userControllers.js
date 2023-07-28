@@ -287,6 +287,20 @@ userController.updateUserInfo = async (req, res, next) => {
   return next();
 };
 
+//this middleware is for when people are updating their information on the Edit Profile page
+userController.getInterests = async (req, res, next) => {
+  const email = req.query.email;
+  try {
+    console.log('getInterests firing');
+    const userInterests = await Users.findOne({email: email})
+    console.log(email);
+    res.status(200).json(userInterests.interests);
+  } catch (error) {
+    console.error(error);
+  }
+  return next();
+};
+
 userController.getProfiles = async (req, res, next) => {
   console.log("hello is this route being hit");
   try {

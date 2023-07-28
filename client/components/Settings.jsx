@@ -23,7 +23,7 @@ const sidebarData = [
   },
   {
     title: "Interests",
-    path: "/account/interests",
+    path: "/interests",
     cName: 'nav-text'
   },
   {

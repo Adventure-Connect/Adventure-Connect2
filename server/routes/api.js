@@ -81,6 +81,11 @@ router.get("/api/getUsers", userController.getProfiles, (req, res) => {
 
 router.put('/account', userController.updateUserInfo, (req, res) => {
   res.end();
-})
+});
+
+router.get('/interests', userController.getInterests, (req, res) => {
+  console.log('/interests firing');
+  res.end();
+});
 
 module.exports = router;

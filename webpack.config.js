@@ -64,4 +64,7 @@ module.exports = {
   resolve: {
     extensions: [".js", ".jsx"],
   },
+  historyApiFallback: {
+    disableDotRule: true
+}
 };

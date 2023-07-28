@@ -7,7 +7,7 @@ const UserProfile = () => {
   const [userLocation, setUserLocation] = useState();
   const [userBio, setUserBio] = useState();
   const [cookies, setCookie] = useCookies();
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState();
 
   useEffect(() => {
     setEmail(cookies.currentEmail);
@@ -79,10 +79,7 @@ const UserProfile = () => {
           setUserBio(event.target.value);
         }}
       ></textarea>
-      {status && (
-            <p>{status}
-            </p>
-          )}
+      {status && <p>{status}</p>}
       <button onClick={updateProfile}>Update Profile</button>
     </>
   );
