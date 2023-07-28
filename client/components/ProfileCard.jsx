@@ -15,7 +15,9 @@ function ProfileCard({ profilePhoto, name, bio, interests, email }) {
       <div className="user-name">{name}</div>
       <div className="bio">{bio}</div>
       <div className="interests">{interests}</div>
-      <button onClick={handleClick}>View More Info</button>
+      <button className="profile-btn" onClick={handleClick}>
+        View More Info
+      </button>
     </div>
   );
 }

@@ -6,6 +6,7 @@ const { Storage } = require("@google-cloud/storage");
 const { format } = require("util");
 const multer = require("multer");
 const nodemailer = require("nodemailer");
+const { findOneAndUpdate } = require("../models/userModel");
 
 // const upload =  multer({
 //   storage: multer.memoryStorage(),
@@ -27,16 +28,19 @@ const bucket = cloudStorage.bucket(bucketName);
 
 const userController = {};
 
-//put all the necessary user shit in here as middleware, then put them into routes in api.js, then put that all together in server.js
-
 //verifying user upon logging in, to be put in route for post to /api/login. if route is successful, redirect to show user page
 
 userController.verifyLogin = async (req, res, next) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    //find a user that has a matching username and password
-    const user = await Users.findOne({ username, password });
+    //find a user that has a matching email and password
+    const user = await Users.findOne({ email, password });
+
+    const cookieHeaders = {
+      httpOnly: false,
+      overwrite: true,
+    };
 
     if (user) {
       console.log("successful log in");
@@ -53,7 +57,7 @@ userController.verifyLogin = async (req, res, next) => {
         httpOnly: false,
         overwrite: true,
       });
-      res.cookie("zipCode", JSON.stringify(user.zip_code), {
+      res.cookie("zipCode", JSON.stringify(user.zipCode), {
         httpOnly: false,
         overwrite: true,
       });
@@ -64,6 +68,7 @@ userController.verifyLogin = async (req, res, next) => {
       res.status(200).json({ message: "Login successful!" });
 
       res.locals.loginStatus = true;
+      return next();
     } else {
       // If the user is not found, send an error response
       res.status(401).json({ message: "Invalid credentials!" });
@@ -72,7 +77,6 @@ userController.verifyLogin = async (req, res, next) => {
     // If an error occurs, send an error response
     res.status(500).json({ message: "Server error!" });
   }
-  return next();
 };
 
   //create new user from signup, if successful route to dashboard
@@ -266,7 +270,7 @@ userController.updateUser = async (req, res, next) => {
       // Document found and updated successfully
     } else {
       console.log("User not found");
-      // No document with the specified username was found
+      // No document with the specified email was found
     }
   } catch (error) {
     console.error(error);
@@ -274,17 +278,62 @@ userController.updateUser = async (req, res, next) => {
   return next();
 };
 
+//this middleware is for when people are updating their information on the Edit Profile page
+userController.updateUserInfo = async (req, res, next) => {
+  try {
+    console.log("updateUserInfo firing");
+
+    const { name, location, bio, email } = req.body;
+    const updatedUser = await Users.findOneAndUpdate(
+      { email: email },
+      { $set: { name: name, zipCode: location, bio: bio } }
+    );
+    if (updatedUser === null) {
+      res
+        .status(500)
+        .json({ message: "Hmmm...we did not find you in our databas" });
+    } else {
+      res.status(200).json({ message: "Your profile has been updated!" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message:
+        "We're experiencing technical difficulties. Please try again later.",
+    });
+  }
+  return next();
+};
+
+//this middleware is for when people are updating their information on the Edit Profile page
+userController.getInterests = async (req, res, next) => {
+  const email = req.query.email;
+  try {
+    console.log("getInterests firing");
+    const userInterests = await Users.findOne({ email: email });
+    console.log(email);
+    res.status(200).json(userInterests.interests);
+  } catch (error) {
+    console.error(error);
+  }
+  return next();
+};
+
 userController.getProfiles = async (req, res, next) => {
-  // console.log("hello is this route being hit");
+  const zipCode = req.query.zipCode;
+  console.log("THIS IS THE ZIPCODE", zipCode);
+  const interests = req.query.currentInterests.split(",");
+
   try {
     //grab zipCode from the cookie and convert to number to match schema
     // const zipCode = Number(req.cookies.zipCode);
-    const zipCode = 123456;
+    // const zipCode = 10001;
     //grab interests from the cookie, parse it from JSON format
     // const interests = JSON.parse(req.cookies.currentInterests);
-    const interests = ["Climbing", "Hiking"];
+    // const interests = ["Climbing", "Hiking"];
     // const interests = ["IDK"];
 
+    //find users with same zipcode and at least one interest in common
     //find users with same zipcode and at least one interest in common
     const users = await Users.find({
       zipCode: zipCode,
@@ -371,6 +420,82 @@ userController.updatePassword = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: "Server error!" });
   }
+};
+
+userController.sendFriendRequest = async (req, res) => {
+  const { name, email, currentUserEmail } = req.body;
+  console.log("this is the cookie", req.cookies);
+  const currentUser = await Users.findOne({ email: currentUserEmail });
+  const user = await Users.findOne({ name, email });
+
+  await Users.findOneAndUpdate(
+    { name, email },
+    {
+      friendRequests: [
+        ...user.friendRequests,
+        {
+          user_id: currentUser._id,
+          name: currentUser.name,
+          profilePhoto: currentUser.profilePhoto,
+        },
+      ],
+    }
+  );
+  res.sendStatus(200);
+};
+
+userController.getFriendRequest = async (req, res) => {
+  const email = req.params.email;
+  console.log("IDK WHY", email);
+  const user = await Users.findOne({ email });
+  console.log("this is the user");
+  // console.log("friend request", user.friendRequests);
+  res.status(200).json({ data: user.friendRequests });
+};
+
+userController.connections = async (req, res) => {
+  const { name, currentUser } = req.body;
+  const currUser = await Users.findOne({ email: currentUser });
+  const reqUser = await Users.findOne({ name });
+  const currUserConnections = currUser.connections;
+  const reqUserConnections = reqUser.connections;
+  const newFriendRequest = currUser.friendRequests.filter(
+    (elem) => elem.name !== reqUser.name
+  );
+
+  const retDoc = await Users.findOneAndUpdate(
+    { email: currentUser },
+    {
+      connections: [
+        ...currUserConnections,
+        {
+          user_id: reqUser._id,
+          name: reqUser.name,
+          profilePhoto: reqUser.profilePhoto,
+        },
+      ],
+      friendRequests: newFriendRequest,
+    },
+    { new: true }
+  );
+
+  await Users.findOneAndUpdate(
+    { name },
+    {
+      connections: [
+        ...reqUserConnections,
+        {
+          user_id: currUser._id,
+          name: currUser.name,
+          profilePhoto: currUser.profilePhoto,
+        },
+      ],
+    }
+  );
+
+  console.log("Successful");
+  console.log(retDoc);
+  res.status(200).json({ data: retDoc.friendRequests });
 };
 
 module.exports = userController;

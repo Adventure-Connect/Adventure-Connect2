@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import "../styles/Header.css"
 
 const Header = () => {
+
   return (
-    <span className="header">
-      <h1>Adventure Connect</h1>
-      <a href="/settings">Edit Settings</a>
-      <a href="/matches">See my Matches</a>
-      <img className="profilePic" src="" alt="" />
-    </span>
+    <div className="header">
+      <h1>this is the header</h1>
+    </div>
   );
 };
 

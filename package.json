@@ -46,7 +46,11 @@
     "@babel/core": "^7.22.8",
     "@babel/preset-env": "^7.22.7",
     "@babel/preset-react": "^7.22.5",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@google-cloud/storage": "^6.12.0",
+    "@mui/icons-material": "^5.14.1",
+    "@mui/material": "^5.14.2",
     "axios": "^1.4.0",
     "body-parser": "^1.20.2",
     "concurrently": "^8.2.0",
@@ -66,11 +70,13 @@
     "react-cookies": "^0.1.1",
     "react-dom": "^18.2.0",
     "react-form-elements": "^4.14.1",
+    "react-icons": "^4.10.1",
     "react-multi-carousel": "^2.8.4",
     "react-responsive-carousel": "^3.2.23",
     "react-router": "^6.14.1",
     "react-router-dom": "^6.14.1",
     "react-select": "^5.7.3",
+    "react-spinners": "^0.13.8",
     "zipcode-city-distance": "^1.0.6"
   }
 }
