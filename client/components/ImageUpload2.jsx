@@ -16,6 +16,7 @@ const ImageUpload2 = forwardRef((props, ref) => {
     setFiles(props.file);
   }, [props.file])
 
+
    // handle drag events
    const handleDrag = function(e) {
     console.log('handleDrag activated')
@@ -104,7 +105,7 @@ const ImageUpload2 = forwardRef((props, ref) => {
 
   const ImageComponent = files !== null ? (
     <div key={props.id} className="image-wrapper">
-      <img className='image-preview' src={imageDisplayed}/>
+      <img index={props.id} className={`image-preview ${props.id === props.profilePictureIndex ? 'with-border' : ''}`} src={imageDisplayed} onClick={(e) => props.selectProfilePic(props.id)}/>
       <button className='deleteImage' onClick={e => removeImage(e, imageCount)}>x</button>
     </div>
   ) : (

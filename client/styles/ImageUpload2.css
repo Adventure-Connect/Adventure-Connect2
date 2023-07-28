@@ -9,6 +9,11 @@
   /* margin: 5%; */
 }
 
+.image-preview:hover {
+  border: 2px solid #f0f0f0;
+  border-radius: 3%;
+}
+
 .imageContainer {
   display: grid;
   grid-template-columns: repeat(3, 200px); /* You can adjust the number of columns here */
@@ -16,6 +21,15 @@
   row-gap: 10px; /* Adjust the gap between rows as needed */
   column-gap: 5px; /* Adjust the gap between images as needed */
   margin: 5%;
+}
+
+.with-border {
+  border: 3px inset #b98d5c; /* Adjust border properties of profile picture */
+  border-radius: 5%; 
+}
+
+.with-border:hover {
+  border-width: 5px;
 }
 
 .upload-component {
@@ -65,4 +79,13 @@
   padding: 0;
   border-radius: 10%;
   cursor: pointer;
+}
+
+.uploadContainer {
+  display: flex; /* Use flexbox to arrange header and imageContainer horizontally */
+  align-items: center; /* Align items vertically within the container */
+}
+
+#uploadHeader {
+  margin-right: 50px; /* Add margin to the right of the header */
 }

@@ -118,15 +118,15 @@ const Signup = () => {
                 </div>
                 <div className="form-group">
                     <label className="form-label" >Email Address</label>
-                    <input type='email' required='true' onChange={e => setEmail(e.target.value)}></input>
+                    <input className="form-input" type='email' required='true' onChange={e => setEmail(e.target.value)}></input>
                 </div>
                 <div className="form-group">
                     <label className="form-label" >Password</label>
-                    <input type='password' required='true' onChange={e => setPassword(e.target.value)}></input>
+                    <input className="form-input" type='password' required='true' onChange={e => setPassword(e.target.value)}></input>
                 </div>
                 <div className="form-group">
                     <label className="form-label" >Zipcode</label>
-                    <input type='text' required='true' onChange={e => setZipcode(e.target.value)}></input>
+                    <input className="form-input" type='text' required='true' onChange={e => setZipcode(e.target.value)}></input>
                 </div>
                 <div>
                     <ImageUpload ref={imageUploadRef}/>
@@ -153,10 +153,10 @@ const Signup = () => {
                 </div>
                 
                 <div className="form-group">
-                    <label>Tell us more about yourself</label>
+                    <label className="form-label">Tell us more about yourself</label>
                     <br></br>
-                    <input type='text' placeholder='Favorite outdoor memories
-                    What are you looking for?' onChange={e => setBio(e.target.value)} style={{height: '150px', width: '250px', textAlign: 'top'}}>
+                    <input className="form-input" type='text' placeholder='Favorite outdoor memories
+                    What are you looking for?' onChange={e => setBio(e.target.value)} style={{height: '20vh', width: '30vw', textAlign: 'top'}}>
                     </input>
                 </div>
                 {/* <button className='btn' type='submit'>Create Account</button> */}

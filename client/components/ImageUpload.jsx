@@ -12,6 +12,7 @@ const ImageUpload = forwardRef((props, ref) => {
   const [dragActive, setDragActive] = useState(false);
   const inputRef = useRef(null);
   const [ files, setFiles ] = useState([null, null, null, null, null, null]);
+  const [ profilePicture, setProfilePicture ] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -19,8 +20,15 @@ const ImageUpload = forwardRef((props, ref) => {
   const handleChildFileUpdate = (newFile, index) => {
     const newFiles = [...files];
     newFiles[index] = newFile;
-    console.log('parent component new file: ', newFiles);
+    // console.log('newfile: ', newFile);
+    // console.log('parent component new file: ', newFiles);
     setFiles(newFiles);
+  }
+
+  // update profile picture index from child component
+  const handleProfilePictureUpdate = (newProfileIndex) => {
+    // console.log('new Profile Pic Index: ', newProfileIndex);
+    setProfilePicture(newProfileIndex);
   }
 
   //grab email from cookies
@@ -32,6 +40,8 @@ const ImageUpload = forwardRef((props, ref) => {
       setImageCount(parseInt(cookies.imageCount));
 
       //if the email is in cookies, get the images from the database
+      //create an images array that holds the original images from the database
+      //populate files with images from database
       const fetchImages = async () => {
         try {
           const data = await fetch(`http://localhost:8080/api/getImages/${currentEmailFromCookies}`, {
@@ -64,9 +74,10 @@ const ImageUpload = forwardRef((props, ref) => {
     }
   }, []);
 
+  //updates email and imageCount from parent component (can likely remove as email can be passed down in upload function from parent)
   useEffect(() => {
     // If props.email or props.imageCount changes, update states
-    console.log('email or imageCount is changing')
+    // console.log('email or imageCount is changing')
     if (!props.email || !props.imageCount) return;
     setEmail(props.email);
     setImageCount(props.imageCount);
@@ -74,40 +85,70 @@ const ImageUpload = forwardRef((props, ref) => {
 
 
     // handle file upload
-    const handleFileUpload = async (e, email, imageCount) => {
+    const handleFileUpload = async (e, email, imageCount, profilePicture) => {
       e.preventDefault();
-      // console.log('inside upload', files);
-      // console.log('email state', email);
-      // console.log('imageCount state: ', imageCount);
+
       const formData = new FormData();
-      const deleteData = new FormData();
+      
+      const deleteData = [];
+
       files.forEach((file, index) => {
         if (typeof file !== 'string') {
           formData.append('image', file)
-          if (images[index] !== null) {
-            console.log('email from handleFileUpload: ', email)
-            deleteData.append('image', images[index].props.src)
-            deleteData.append('email', email)
+          if (images[index] !== null && images[index] !== undefined) {
+            deleteData.push(images[index].props.src);
           }
         };
       });
+      
+      // console.log(deleteData);
+
       try {
-        await fetch(`/api/upload-file-to-cloud-storage/${email}`, {
-              method  : 'POST',
-              body: formData
+        const response = await fetch(`/api/upload-file-to-cloud-storage/${email}`, {
+            method  : 'POST',
+            body: formData
             }
         )
-        console.log('upload success');
-        await fetch('/api/api/user', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include',
-                body: JSON.stringify({ imageCount } )
-            })
-        console.log('imageCount updated');
-        navigate('/dashboard');
+         // Check if the response is successful (status code 200-299)
+        if (response.ok) {
+          const uploadedImages = await response.json();
+          console.log('uploaded images: ', uploadedImages.returnUrls);
+          const profileUrl = uploadedImages.returnUrls[profilePicture];
+        } else {
+          // Handle the error if the response is not successful
+          console.log('Error: Could not upload images');
+        }
+        //delete images that are no longer in the files array
+        const deleted = await fetch(`/api/deleteImage/${email}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({image: deleteData})
+        });
+
+
+        //update image count
+        // await fetch('/api/api/user', {
+        //         method: 'PUT',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         credentials: 'include',
+        //         body: JSON.stringify({ imageCount } )
+        //     })
+        // console.log('imageCount updated');
+
+        //update profile picture
+       await fetch('/api/api/user', {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify({ profileUrl } )
+      })
+        // navigate('/dashboard');
       }
       catch (err) {
         console.log(err);
@@ -122,17 +163,29 @@ const ImageUpload = forwardRef((props, ref) => {
 
     // create six image upload elements with files if they already exist
     const imageUploadElements = files.map((file, index) => {
-      return (<ImageUpload2 key={index} id={index} dragActive={dragActive} file={file} onFileUpdate={handleChildFileUpdate}/>)
+      return (
+        <ImageUpload2 
+        key={index} 
+        id={index} 
+        dragActive={dragActive} 
+        file={file} 
+        onFileUpdate={handleChildFileUpdate} 
+        profilePictureIndex={profilePicture}
+        selectProfilePic={handleProfilePictureUpdate}
+        />)
     })
    
 
   return (
-    <div className="imageContainer">
-      {imageUploadElements}
-      <div style={{marginBottom: '3%'}}>
-        <button className='btn' onClick={e => handleFileUpload(e, email, imageCount)} id='image_upload'>Upload</button>
-       </div>
+    <div className="uploadContainer">
+      <h3 id='uploadHeader'>Photos</h3>
+      <div className="imageContainer">
+        {imageUploadElements}
+        <div style={{marginBottom: '3%'}}>
+          <button className='btn' onClick={e => handleFileUpload(e, email, imageCount, profilePicture)} id='image_upload'>Upload</button>
+        </div>
       </div>
+    </div>
   );
 });
 
