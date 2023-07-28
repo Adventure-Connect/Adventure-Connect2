@@ -305,6 +305,21 @@ userController.updatePassword = async (req, res) =>{
     res.status(500).json({ message: "Server error!" });
   }
 }
+//GET a user --> created by KS 7/26
+userController.getCurrentUser = async (req, res, next) =>{
+  const email = req.params.email;
+  const user = await Users.findOne({email: email})
+
+  if (!user) {
+    return next({
+      log: "Express error handler caught middleware error when getting user",
+      message: { err: "User does not exist" },
+    });
+  }
+
+  res.locals.userFound = user;
+  return next();
+}
 
 
 module.exports = userController;

@@ -61,6 +61,9 @@ router.get('/api/getUsers', userController.getProfiles, (req, res) => {
   res.json(usersToDisplay);
 });
 
-
+//GET a user --> created by KS 7/26
+router.get("/:email", userController.getCurrentUser, (req, res) => {
+  res.status(200).json(res.locals.userFound);
+});
 
 module.exports = router;

@@ -1,0 +1,5 @@
+.main-contact-container{
+    display: grid;
+    grid-template-columns: 10% 75% 15%;
+    overflow: hidden;
+}
