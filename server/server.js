@@ -4,30 +4,31 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const apiRouter = require('./routes/api');
-const connectDB = require('./connectDB')
+const apiRouter = require("./routes/api");
+const connectDB = require("./connectDB");
 
 const app = express();
 
-const allowedOrigins = ['http://localhost:8080', 'http://localhost:3000'];
+const allowedOrigins = ["http://localhost:8080", "http://localhost:3000"];
 
-app.use(cors({
-  origin: allowedOrigins,
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type'],
-}));
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser());
 
-
 const PORT = 3000;
 
 connectDB();
 
-console.log(module.exports)
+console.log(module.exports);
 
 /**
  * handle parsing request body

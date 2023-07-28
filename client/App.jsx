@@ -15,7 +15,7 @@ import OTP from "./components/OTP.jsx";
 import Matches from "./components/Matches.jsx";
 import Home from "./components/Home.jsx";
 import Navbar from "./components/Navbar.jsx";
-export const RecoveryContext = createContext();
+export const RecoveryContext = createContext();;
 import "./styles.css";
 import PrivateRoutes from "./utils/PrivateRoutes.js";
 import Interests from "./components/Interests.jsx";
@@ -60,3 +60,5 @@ const App = () => {
 };
 
 export default App;
+
+//account
