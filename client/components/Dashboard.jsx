@@ -40,7 +40,7 @@ const Dashboard = () => {
     console.log("this is the current interest", cookies.currentInterests);
     setLoading(true);
     const users = await axios.get(
-      `http://localhost:3000/api/api/getUsers/${cookies.zipCode}`
+      `http://localhost:3000/api/api/getUsers/?zipCode=${cookies.zipCode}&currentInterests=${cookies.currentInterests}`
     );
     console.log(users.data);
     setUsersArr(users.data);

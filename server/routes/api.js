@@ -74,7 +74,7 @@ router.put(
 );
 
 //route to grab similar users to populate UserProfiles, based on zipcode and interest
-router.get("/api/getUsers/:zip", userController.getProfiles, (req, res) => {
+router.get("/api/getUsers", userController.getProfiles, (req, res) => {
   const usersToDisplay = res.locals.matchingUsers;
   res.json(usersToDisplay);
 });

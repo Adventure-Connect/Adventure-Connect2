@@ -270,7 +270,9 @@ userController.updateUser = async (req, res, next) => {
 };
 
 userController.getProfiles = async (req, res, next) => {
-  const zipCode = req.params.zip;
+  const zipCode = req.query.zipCode;
+  console.log("THIS IS THE ZIPCODE", zipCode);
+  const interests = req.query.currentInterests.split(",");
 
   try {
     //grab zipCode from the cookie and convert to number to match schema
@@ -278,7 +280,7 @@ userController.getProfiles = async (req, res, next) => {
     // const zipCode = 10001;
     //grab interests from the cookie, parse it from JSON format
     // const interests = JSON.parse(req.cookies.currentInterests);
-    const interests = ["Climbing", "Hiking"];
+    // const interests = ["Climbing", "Hiking"];
     // const interests = ["IDK"];
 
     //find users with same zipcode and at least one interest in common
