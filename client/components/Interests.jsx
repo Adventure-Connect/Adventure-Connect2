@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import "../styles/Interests.css";
 
 const Interests = () => {
   const [cookies, setCookie] = useCookies();
@@ -36,9 +37,9 @@ const Interests = () => {
 
 
   return (
-    <>
+    <div className="interests">
       <h1>Interests</h1>
-      <h4>Your interests</h4>
+      <h2>Your interests</h2>
       <div className="current-interests">
         <ul>
           {interests && interests.map((interest) => (
@@ -46,12 +47,12 @@ const Interests = () => {
           ))}
         </ul>
       </div>
-      <h4>Add more interests</h4>
+      <h2>Add more interests</h2>
       <p>
         Add more interests by searching by category or searching by keyword!
       </p>
       <button>Save Changes</button>
-    </>
+    </div>
   );
 };
 
