@@ -1,9 +1,12 @@
+
 /* ul {
   border-right: blue solid 2px;
   width: 300px;
   height: 900px;
   list-style: none;
 }
+
+
 
 li,
 a {
@@ -46,6 +49,10 @@ a {
   background-color: aquamarine;
   color: black;
 } */
+
+* {
+  font-family: "Roboto", sans-serif;
+}
 
 .indicators {
   display: flex;

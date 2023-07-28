@@ -1,8 +1,26 @@
 .carousel-img {
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
+}
+
+.dashboard-container {
+  max-width: 75rem;
+  margin: 0 auto;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 }
 
 .carousel-container {
-  background-color: red;
+}
+
+.loader {
+  margin: 0 auto;
+}
+
+.interest {
+  background-color: #877767;
+  padding: 0.3rem 0.6rem;
+  border-radius: 1.2rem;
+  color: white;
+  font-weight: bold;
 }

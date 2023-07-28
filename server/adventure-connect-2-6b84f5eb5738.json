@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "adventure-connect-2",
+  "private_key_id": "6b84f5eb5738dca8f14bcdf1290e05d9f7128dcd",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDL7UgZdIkKXUPX\ntvvVtOQgkihE7l1vI5GbIqDmMyJeL6mr+wIaVU90QvdlpMuW9jT6ercUfmVcYx1k\nno6Kfe3iyKF2FAk8QuqTWZrOkBxz4NppQo3RlN0ljmbQkE3WnbGMW3l7YaxAXWPv\n0aeL0LI5dcQ/duto06xHWN3Cr4hC6AG2CQY5SNwJ2/FMdQEwXikOulPVeXsqRkXU\nGzQVUoNPnODEm2hEbW7QO/nBSOwaJFjHmeGP1vMu/KvHvTd0iAf1GUTjJ5s7Fmqo\nK4SZEUcMWGD54KkgKqROje12C3lf8jIGv/eySjP3pnlGYBbfI/5OosdDHoasu44B\nwToluhpFAgMBAAECggEADBS2CUAEoFcPHlfqSmpJe359ITxHz745MYoXIxwTZKYJ\nNLWNldbI+re+5UgigYJ7d/1OHEoyogsDIkNcaWr1bVJ6cj7UnzvNnsYXrDYQYXMI\nLWUydqCNi1yIzcFGwzibXJfMthj+td9yfLIcbWWDMXE/G41le9PSaHWkyZRRi7kM\ny3FoskvWG3+cWgsaQrJaujyWlsTRcXqzwc+f98B9lZLV8Y6tuxkUn8IdvGE3UaVE\nutH3s3oOWPvW1fU1fuBFSSQu745no6gTBiX8EmVN2yV29wGiLcDa3cLY8EV3yeJ6\nA7pC+xqhByneM92qStXeBw1UpaEMTqwR1vb65M0KAQKBgQDvBrQbAOF2DQ4S/9Aw\nfek+4ZiWdIWyaoyqpaZeFDSlcT01lJQXRtlfsVfMQK4eI4m+yWlrsQw9xBDMcram\nVtPDjka6izhrATjhq2Wsx7icFKdl4ZzT3RDiVpmfpfkKz04ZkZQ/R0DSRPeSVYo5\n9JqcronyMi8dRxLR6HNiNlahAQKBgQDaaICG4kFTgMui6b3Rd/aNO3PG2Z94SUry\nz4xKheIjfmhnejuE9qrbzKb0qj888bgEghVCkzYQxUaMKobAUj0CeHZr5ddOa8xp\nnqW3nY+kgk1xFzyI6iZHHtfOWVNoo/FpxwNi37Rpyfc+ZAC+lcwV5vSeq73/BsBG\nAOtX1Yu1RQKBgQCpRCwC+2quOKyA09tQm7mzJ/rwgO+02zNmHQxljxWBG2HnMaJ1\noVyKIYI1SJCFE1GWY/ddpfEvREtJHOsvfElWMMjxjWmUjTcEyGWmJ4EaNp4czdpL\nRj+QqRb9MYHdH9UE0k0TSpgiz2gqnpzWUduznP5fHx6yMwSm1V/wat6KAQKBgQCG\n1w/KtrMYJ6MRQHfFc+fOyA6xjLfsnmtcPxDhDYlQ2oEAqbFHZLaVnuLQmK8UJDO0\n7M7NXG97qR/l93dcEynBdbe+45aqvtjjuGOdWfRN33iKQotICC97pyobJoDdUKIB\n6TFJAM20plEzvq/K+laWixEpSOSzJ2rbjUO+5YMsdQKBgGMXRg0sdaeObcfvXBHq\ngNBS53kBiwDL2nokjr3ixJa0+R30hRqphcLaXk758eZ0oemoYpr1eg3JTZJ2Anpy\nBHPfXCvZrpNNE18GNW+TMRjE67G4PCp+X8tUoPMRIbV0WseFr8fswR6s6XXP8VOY\nev85e/YXOcIgIV3y4skDlwMu\n-----END PRIVATE KEY-----\n",
+  "client_email": "mm-adventure-connect-2@adventure-connect-2.iam.gserviceaccount.com",
+  "client_id": "105592661379993598915",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/mm-adventure-connect-2%40adventure-connect-2.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

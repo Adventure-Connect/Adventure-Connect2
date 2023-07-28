@@ -9,9 +9,14 @@ const usersSchema = new mongoose.Schema({
   interests: { type: Array },
   bio: { type: String },
   imageCount: { type: Number },
-  profilePhoto: { type: String }
+  profilePhoto: { type: String },
+  friendRequests: { type: Array },
+  connections: { type: Array },
 });
+
+//CONNECTIONS ARRAY
+// [{ user_id: "fffefef", name: "Zai", profilePhoto: "iijijiji" }];
 
 const Users = mongoose.model("Users", usersSchema);
 
-module.exports = Users
+module.exports = Users;

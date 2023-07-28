@@ -1,0 +1,50 @@
+.user-images {
+  width: 150px;
+  height: 150px;
+}
+
+.user-specific-container {
+  border: 2px solid black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.6rem 2.2rem;
+  margin-left: 0.6rem;
+  margin-right: 0.6rem;
+  gap: 1.2rem;
+  border-radius: 2.4rem;
+}
+
+.user-specific-name {
+  font-size: 2.2rem;
+  font-weight: bold;
+}
+
+.user-specific-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1.2rem;
+}
+
+.user-specific-btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 2.4rem;
+  background-color: #b98d5c;
+  cursor: pointer;
+  color: black;
+  font-weight: bold;
+}
+
+.user-specific-btn:hover {
+  background-color: #c7a57e;
+}
+
+.user-specific-bio {
+  text-align: center;
+}

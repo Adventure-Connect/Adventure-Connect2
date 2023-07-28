@@ -1,51 +1,57 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
+import { useLocation } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+import "../styles/UserSpecific.css";
 
 const UserSpecific = () => {
+  const [cookies, setCookie] = useCookies();
+  const location = useLocation();
+  console.log(location);
+  console.log(location.state.email);
+  console.log("this is the current email", cookies.currentEmail);
 
-    const [ userView, setUserView ] = useState();
+  const [userPhotos, setUserPhotos] = useState([]);
 
-    // useEffect(() => {
-    //     async function getUser() {
-    //         try {
-    //             // refactor line 10 to the correct endpoint for getting specific user information
-    //             const data = await fetch(`http://localhost:8080/api/${props.currentUser}`, {
-    //                 method: 'GET',
-    //             })
-    //             const json = await data.json();
-    //             setUserView(json);
-    //             return;
-    //         }
-    //         catch (err) {
-    //             alert(`An error has occurred! ${err.message}`);
-    //             return err;
-    //         }
-    //     };
-        
-    //     getUser();
-    // }, []);
+  const handleClick = async () => {
+    const response = await axios.post(
+      `http://localhost:3000/api/friendRequest`,
+      {
+        name: location.state.name,
+        email: location.state.email,
+        currentUserEmail: cookies.currentEmail,
+      }
+    );
+  };
 
-    // just for testing; will need to be replaced with actual image data pulled from mongodb later
-    const images = [
-        "https://www.ispo.com/sites/default/files/2017-10/big-deal_0_0.jpeg",
-        "https://s3.amazonaws.com/images.gearjunkie.com/uploads/2022/06/GJ-Alex-Honnold-Podcast-Feature-1380x920.jpg",
-        "https://image-cdn.essentiallysports.com/wp-content/uploads/image_2022-12-13_224049157.png?width=600",
-        "https://s3.amazonaws.com/www.explorersweb.com/wp-content/uploads/2023/01/04180652/Screen-Shot-2023-01-04-at-12.06.21-PM.jpg"
-    ]
+  const getUserPhotos = async () => {
+    const userPhotos = await axios.get(
+      `http://localhost:3000/api/getImages/${location.state.email}`
+    );
+    console.log(userPhotos.data);
+    setUserPhotos(userPhotos.data);
+  };
 
-    const carousel = images.map((URL, index) => (
-        <div className="slide">
-          <img src={URL} key={index} />
-        </div>
-    ))
+  useEffect(() => {
+    getUserPhotos();
+  }, []);
 
-    return (
-        <div className="box">
-          <Carousel>
-            {carousel}
-          </Carousel>
-        </div>
-      );
-}
+  const renderPhotos = userPhotos.map((elem) => {
+    return <img className="user-images" src={elem.image} />;
+  });
+
+  return (
+    <div className="user-specific-container">
+      <div className="user-specific-name">{location.state.name}</div>
+      <div className="user-specific-email">{location.state.email}</div>
+      <div className="user-specific-bio">{location.state.bio}</div>
+      <div className="user-specific-grid">{renderPhotos}</div>
+      <button className="user-specific-btn" onClick={handleClick}>
+        Connect with this User
+      </button>
+    </div>
+  );
+};
 
 export default UserSpecific;
