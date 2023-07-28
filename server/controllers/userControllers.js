@@ -271,7 +271,7 @@ userController.updateUser = async (req, res, next) => {
 
 userController.getProfiles = async (req, res, next) => {
   const zipCode = req.params.zip;
-  console.log("hello is this route being hit");
+
   try {
     //grab zipCode from the cookie and convert to number to match schema
     // const zipCode = Number(req.cookies.zipCode);

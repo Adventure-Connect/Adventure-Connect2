@@ -37,6 +37,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
 
   const getUsers = async () => {
+    console.log("this is the current interest", cookies.currentInterests);
     setLoading(true);
     const users = await axios.get(
       `http://localhost:3000/api/api/getUsers/${cookies.zipCode}`
