@@ -3,12 +3,13 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  mode: "development",
+  mode: process.env.NODE_ENV,
   entry: "./client/index.js",
-  // output: {
-  //   path: path.join(__dirname, "/dist"),
-  //   filename: "bundle.js",
-  // },
+  output: {
+    path: path.join(__dirname, "/dist"),
+    filename: "bundle.js",
+    publicPath: "/",
+  },
   devServer: {
     // static: {
     //   directory: path.resolve(__dirname, "dist"),
@@ -26,6 +27,11 @@ module.exports = {
       inject: true,
     }),
   ],
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  },
   module: {
     rules: [
       {
@@ -64,4 +70,7 @@ module.exports = {
   resolve: {
     extensions: [".js", ".jsx"],
   },
+  historyApiFallback: {
+    disableDotRule: true
+}
 };

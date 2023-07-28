@@ -7,7 +7,6 @@ import UserProfile from "./components/UserProfile.jsx";
 import UserSpecific from "./components/UserSpecific.jsx";
 import SettingsBar from "./components/Settings.jsx";
 import EditProfile from "./components/EditProfile.jsx";
-import AccountInterests from "./components/AccountInterests.jsx";
 import AccountMgmt from "./components/AccountMgmt.jsx";
 import ChangePassword from "./components/ChangePassword.jsx";
 import Dashboard from "./components/Dashboard.jsx";
@@ -16,9 +15,10 @@ import OTP from "./components/OTP.jsx";
 import Matches from "./components/Matches.jsx";
 import Home from "./components/Home.jsx";
 import Navbar from "./components/Navbar.jsx";
-export const RecoveryContext = createContext();
+export const RecoveryContext = createContext();;
 import "./styles.css";
 import PrivateRoutes from "./utils/PrivateRoutes.js";
+import Interests from "./components/Interests.jsx";
 
 const App = () => {
   const [email, setEmail] = useState("");
@@ -33,9 +33,9 @@ const App = () => {
             //PrivateRoutes protects routes from users who are not logged in
             <Route element={<PrivateRoutes />}>
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/interests" element={<Interests />} />
               <Route path="/userprofile" element={<UserProfile />} />
               <Route path="/account" element={<EditProfile />} />
-              <Route path="/account/interests" element={<AccountInterests />} />
               <Route path="/account/management" element={<AccountMgmt />} />
               <Route path="/account/password" element={<ChangePassword />} />
               <Route path="/userspecific" element={<UserSpecific />} />
@@ -60,3 +60,5 @@ const App = () => {
 };
 
 export default App;
+
+//account

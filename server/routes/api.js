@@ -50,7 +50,7 @@ router.get("/", (req, res) => {
 //fine that im setting status and sending message in the controller instead of last step?
 router.post("/login", userController.verifyLogin, (req, res) => {
   //end the response, with status and message set in verifyUser middleware
-  res.end();
+  res.sendStatus(200);
   //front code on login component should determine whether to redirect to userProfiles based on error or not
 });
 
@@ -92,5 +92,14 @@ router.get(
 );
 
 router.post("/accept", userController.connections, (req, res) => {});
+
+router.put("/account", userController.updateUserInfo, (req, res) => {
+  res.end();
+});
+
+router.get("/interests", userController.getInterests, (req, res) => {
+  console.log("/interests firing");
+  res.end();
+});
 
 module.exports = router;

@@ -3,6 +3,7 @@ require("dotenv").config();
 
 const MONGO_URI =
   "mongodb+srv://adventureConnect:N125JBQeS7ANQty9@ac-project.bszws3q.mongodb.net/AdventureConnect?retryWrites=true&w=majority"; //replace with new URI
+
 console.log(MONGO_URI);
 
 // call this function inside server.js
