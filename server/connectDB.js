@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const MONGO_URI = "mongodb+srv://adventure:2U2wruh3QzUWaOiS@adventureconnect.se8hcii.mongodb.net/?retryWrites=true&w=majority"; //replace with new URI
+const MONGO_URI =
+  "mongodb+srv://adventure:2U2wruh3QzUWaOiS@adventureconnect.se8hcii.mongodb.net/?retryWrites=true&w=majority"; //replace with new URI
 console.log(MONGO_URI);
 
 // call this function inside server.js
@@ -18,4 +19,4 @@ const connectDB = () => {
     .catch((err) => console.log(err));
 };
 
-module.exports = connectDB
+module.exports = connectDB;

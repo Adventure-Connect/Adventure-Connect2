@@ -127,6 +127,9 @@ const Login = () => {
       <h1>
         Adventure<br></br>Connect
       </h1>
+      <h1>
+        Adventure<br></br>Connect
+      </h1>
       <h2>Find Friends Outdoors</h2>
       <div id="login_container">
         <form onSubmit={handleSubmit}>

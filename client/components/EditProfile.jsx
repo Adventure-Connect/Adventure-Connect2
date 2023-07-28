@@ -17,7 +17,7 @@ const UserProfile = () => {
       <h3>Bio</h3>
       <textarea name="bio" id="bio" cols="30" rows="10"></textarea>
     </>
-  )
-}
+  );
+};
 
 export default UserProfile;

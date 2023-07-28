@@ -27,16 +27,19 @@ const bucket = cloudStorage.bucket(bucketName);
 
 const userController = {};
 
-//put all the necessary user shit in here as middleware, then put them into routes in api.js, then put that all together in server.js
-
 //verifying user upon logging in, to be put in route for post to /api/login. if route is successful, redirect to show user page
 
 userController.verifyLogin = async (req, res, next) => {
   const { username, password } = req.body;
 
   try {
-    //find a user that has a matching username and password
-    const user = await Users.findOne({ username, password });
+    //find a user that has a matching email and password
+    const user = await Users.findOne({ email, password });
+
+    const cookieHeaders = {
+      httpOnly: false,
+      overwrite: true,
+    };
 
     if (user) {
       console.log("successful log in");
@@ -64,6 +67,7 @@ userController.verifyLogin = async (req, res, next) => {
       res.status(200).json({ message: "Login successful!" });
 
       res.locals.loginStatus = true;
+      return next();
     } else {
       // If the user is not found, send an error response
       res.status(401).json({ message: "Invalid credentials!" });
@@ -142,6 +146,7 @@ userController.createNewUser = async (req, res, next) => {
     return next();
   } catch (error) {
     console.log(error);
+    next(error);
     next(error);
   }
 
@@ -260,7 +265,7 @@ userController.updateUser = async (req, res, next) => {
       // Document found and updated successfully
     } else {
       console.log("User not found");
-      // No document with the specified username was found
+      // No document with the specified email was found
     }
   } catch (error) {
     console.error(error);
@@ -279,6 +284,7 @@ userController.getProfiles = async (req, res, next) => {
     const interests = ["Climbing", "Hiking"];
     // const interests = ["IDK"];
 
+    //find users with same zipcode and at least one interest in common
     //find users with same zipcode and at least one interest in common
     const users = await Users.find({
       zipCode: zipCode,

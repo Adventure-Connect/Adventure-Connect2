@@ -12,7 +12,7 @@ const AccountInterests = () => {
         <input type="submit" value="Save Changes" />
       </form>
     </>
-  )
-}
+  );
+};
 
 export default AccountInterests;
