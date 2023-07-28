@@ -31,7 +31,7 @@ const userController = {};
 //verifying user upon logging in, to be put in route for post to /api/login. if route is successful, redirect to show user page
 
 userController.verifyLogin = async (req, res, next) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   try {
     //find a user that has a matching email and password
@@ -77,7 +77,6 @@ userController.verifyLogin = async (req, res, next) => {
     // If an error occurs, send an error response
     res.status(500).json({ message: "Server error!" });
   }
-  return next();
 };
 
 // userController.test = (req, res, next) => {
@@ -277,18 +276,26 @@ userController.updateUser = async (req, res, next) => {
 //this middleware is for when people are updating their information on the Edit Profile page
 userController.updateUserInfo = async (req, res, next) => {
   try {
-    console.log('updateUserInfo firing');
+    console.log("updateUserInfo firing");
 
-    const {name, location, bio, email} = req.body;
-    const updatedUser = await Users.findOneAndUpdate({email: email}, {$set:{name: name, zipCode: location, bio: bio}});
-    if(updatedUser === null) {
-      res.status(500).json({message: "Hmmm...we did not find you in our databas"})
-    }else {
-      res.status(200).json({message: "Your profile has been updated!"});
+    const { name, location, bio, email } = req.body;
+    const updatedUser = await Users.findOneAndUpdate(
+      { email: email },
+      { $set: { name: name, zipCode: location, bio: bio } }
+    );
+    if (updatedUser === null) {
+      res
+        .status(500)
+        .json({ message: "Hmmm...we did not find you in our databas" });
+    } else {
+      res.status(200).json({ message: "Your profile has been updated!" });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({message: "We're experiencing technical difficulties. Please try again later."});
+    res.status(500).json({
+      message:
+        "We're experiencing technical difficulties. Please try again later.",
+    });
   }
   return next();
 };
@@ -297,8 +304,8 @@ userController.updateUserInfo = async (req, res, next) => {
 userController.getInterests = async (req, res, next) => {
   const email = req.query.email;
   try {
-    console.log('getInterests firing');
-    const userInterests = await Users.findOne({email: email})
+    console.log("getInterests firing");
+    const userInterests = await Users.findOne({ email: email });
     console.log(email);
     res.status(200).json(userInterests.interests);
   } catch (error) {
