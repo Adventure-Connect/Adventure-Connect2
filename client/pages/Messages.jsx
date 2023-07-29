@@ -4,7 +4,7 @@ import "../styles/Messages.css"
 function Messages(){
     return(
         <div className="messages-main-container">
-           <div>Messages</div>
+           {/* <div>Messages</div> */}
         </div>
     )
 }

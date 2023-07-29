@@ -43,6 +43,7 @@ function ChatContainer(prop){
     // },[prop.currentChat]);
 
     const handleSentMsg = async(msg) =>{
+        alert(msg);
         // POST request using fetch()
         fetch(`http://localhost:3000/api/messages/addMsg`, {
             
