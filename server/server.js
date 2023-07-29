@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const apiRouter = require("./routes/api");
 const connectDB = require("./connectDB");
+const messageRoutes = require("./routes/messagesRoute")
 
 const app = express();
 
@@ -45,8 +46,13 @@ app.use(express.static(path.resolve(__dirname, "../client")));
  * define route handlers
  */
 
+//
+
 //I think once we have general routes done we will want to change this to just app.use(apiRouter?)
 app.use("/api", apiRouter);
+
+//Route to messages
+app.use("/api/messages", messageRoutes)
 
 // catch-all route handler for any requests to an unknown route
 app.use((req, res) =>
