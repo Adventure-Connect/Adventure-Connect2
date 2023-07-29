@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useCookies } from "react-cookie";
+import "../styles/EditProfile.css";
 import ImageUpload from './ImageUpload';
 
 const UserProfile = () => {
@@ -50,50 +51,52 @@ const UserProfile = () => {
   };
 
   return (
-    <>
-      <h1>Edit Profile</h1>
-      <p>This information will appear on your public profile</p>
+    <div className="outer-container">
+      <div className="edit-profile">
+        <h1>Edit Profile</h1>
+        <p>This information will appear on your public profile</p>
 
-      <h3>Name (required)</h3>
-      <input
-        type="text"
-        name="name"
-        id="name"
-        placeholder="ex: Michael Fish"
-        onChange={(event) => {
-          setUserName(event.target.value);
-        }}
-      />
+        <h3>Name (required)</h3>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          placeholder="ex: Michael Fish"
+          onChange={(event) => {
+            setUserName(event.target.value);
+          }}
+        />
 
-      <h3>Your location (required)</h3>
-      <input
-        type="text"
-        name="zip code"
-        id="zip-code"
-        placeholder="ex: 12345"
-        onChange={(event) => {
-          setUserLocation(event.target.value);
-        }}
-      />
+        <h3>Your location (required)</h3>
+        <input
+          type="text"
+          name="zip code"
+          id="zip-code"
+          placeholder="ex: 12345"
+          onChange={(event) => {
+            setUserLocation(event.target.value);
+          }}
+        />
 
       <div>
         <ImageUpload ref={imageUploadRef}/>
       </div>
 
-      <h3>Bio</h3>
-      <textarea
-        name="bio"
-        id="bio"
-        cols="30"
-        rows="10"
-        placeholder="Tell us a bit more about yourself!"
-        onChange={(event) => {
-          setUserBio(event.target.value);
-        }}
-      ></textarea>
-      {status && <p>{status}</p>}
-      <button onClick={updateProfile}>Update Profile</button>
-    </>
+        <h3>Bio</h3>
+        <textarea
+          name="bio"
+          id="bio"
+          cols="30"
+          rows="10"
+          placeholder="Tell us a bit more about yourself!"
+          onChange={(event) => {
+            setUserBio(event.target.value);
+          }}
+        ></textarea>
+        {status && <p>{status}</p>}
+        <button onClick={updateProfile}>Update Profile</button>
+      </div>
+    </div>
   );
 };
 

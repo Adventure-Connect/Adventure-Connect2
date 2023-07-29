@@ -1,0 +1,47 @@
+
+.edit-profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 25px 30%;
+}
+
+
+.edit-profile h1 {
+  padding: 10px 0;
+  font-weight: 500;
+}
+
+.edit-profile h3 {
+  padding: 10px 0;
+  font-weight: 500;
+}
+
+input {
+  padding: 5px;
+}
+
+textarea {
+  padding: 10px;
+}
+
+
+.edit-profile p {
+  font-size: .9rem;
+}
+
+
+.edit-profile button {
+  padding: 10px 10px;
+  width: 150px;
+  color: #f0f0f0;
+  border: none;
+  background-color: #2c2b27;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  margin: 30px 0;
+}
+
+button:hover {
+  background-color: #595855;
+}

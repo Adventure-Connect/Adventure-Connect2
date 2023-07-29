@@ -100,7 +100,7 @@ const ImageUpload = forwardRef((props, ref) => {
 
     console.log("THIS IS THE FILES", files);
 
-    files.forEach((file, index) => {
+    files.forEach(async (file, index) => {
       if (typeof file !== "string") {
         formData.append("image", file);
         if (images[index] !== null && images[index] !== undefined) {
