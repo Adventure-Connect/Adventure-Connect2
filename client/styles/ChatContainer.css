@@ -1,0 +1,23 @@
+.main-chat-c-container{
+    padding-top: 1rem;
+}
+.chat-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+.chat-header .user-details{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+   
+}
+.chat-header .username h3{
+    color: white;
+    font-weight: bold;
+}
+.chat-header .avatar img{
+    height: 4.5rem;
+    width: 4.5rem;
+}

@@ -19,6 +19,7 @@ export const RecoveryContext = createContext();
 import "./styles.css";
 import PrivateRoutes from "./utils/PrivateRoutes.js";
 import Interests from "./components/Interests.jsx";
+import Chat from "./pages/Chat.jsx"
 
 const App = () => {
   const [email, setEmail] = useState("");
@@ -52,6 +53,7 @@ const App = () => {
             />
             <Route path="/imageupload" element={<ImageUpload />} />
             <Route path="/otp" element={<OTP />} />
+            <Route path = "/chat" element ={<Chat/>} />
           </Routes>
         </BrowserRouter>
       </RecoveryContext.Provider>

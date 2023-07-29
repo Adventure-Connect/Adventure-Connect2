@@ -1,0 +1,14 @@
+.main-welcome-container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #f0f0f0;
+}
+.main-welcome-container img{
+    height: 25rem;
+}
+.main-welcome-container span{
+    color: rgba(26, 131, 255,0.8);
+    font-weight: bold;
+;}
