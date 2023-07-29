@@ -1,0 +1,91 @@
+/* Add styles to position the button */
+.image-preview {
+  display: flex;
+  justify-content: center;
+  position: relative; /* Add relative positioning to the container */
+  overflow: hidden;
+  width: 100%;
+  height: auto;
+  /* margin: 5%; */
+}
+
+.image-preview:hover {
+  border: 2px solid #f0f0f0;
+  border-radius: 3%;
+}
+
+.imageContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 200px); /* You can adjust the number of columns here */
+  grid-template-rows: repeat(2, 200px);
+  row-gap: 10px; /* Adjust the gap between rows as needed */
+  column-gap: 5px; /* Adjust the gap between images as needed */
+  margin: 5%;
+}
+
+.with-border {
+  border: 3px inset #b98d5c; /* Adjust border properties of profile picture */
+  border-radius: 5%; 
+}
+
+.with-border:hover {
+  border-width: 5px;
+}
+
+.upload-component {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* border: 2px dashed #ccc; */
+  border-radius: 5px;
+  cursor: pointer;
+  overflow: hidden;
+}
+#label-file-upload {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* width: 100%; */
+  /* height: 100%; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Adjust the margin for the button */
+.upload-button {
+  margin-top: 15%;
+}
+
+.image-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+
+.deleteImage {
+  position: absolute; /* Add absolute positioning to the button */
+  top: 0px;
+  right: 0px;
+  background: #2c2b27;
+  color: #d9d9d9;
+  border: none;
+  width: 15px;
+  height: 15px;
+  padding: 0;
+  border-radius: 10%;
+  cursor: pointer;
+}
+
+.uploadContainer {
+  display: flex; /* Use flexbox to arrange header and imageContainer horizontally */
+  align-items: center; /* Align items vertically within the container */
+}
+
+#uploadHeader {
+  margin-right: 50px; /* Add margin to the right of the header */
+}

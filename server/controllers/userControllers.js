@@ -79,77 +79,41 @@ userController.verifyLogin = async (req, res, next) => {
   }
 };
 
-// userController.test = (req, res, next) => {
-//   res.send('test')
-// }
-
-// fetch(endpoint, {
-//   method: 'POST',
-//   headers: {
-//     'Content-Type': 'application/json',
-//   },
-//   body: JSON.stringify({
-//     properties
-//   })
-// })
-// .then(response => response.json())
-// .then(data => console.log(data))
-// .catch(error => console.log(error))
-
-userController.createNewUser = async (req, res, next) => {
-  console.log(Users);
-  //set all the values for no user from req.body
-  // console.log(JSON.stringify(req.body));
-  // const {username, firstName, lastName, email, interests, zipCode, password} = req.body
-  console.log("before inserting new document to db");
-
-  const newUser = new Users({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-    zipCode: req.body.zipCode,
-    interests: req.body.interests,
-    bio: req.body.bio,
-    imageCount: req.body.imageCount,
-    profilePhoto: "",
-  });
-  console.log("made the document");
-  try {
-    //save the new user to the database
-    const savedUser = await Users.create(newUser);
-    res.cookie("currentEmail", savedUser.email, {
-      httpOnly: false,
-      overwrite: true,
+  //create new user from signup, if successful route to dashboard
+  
+  userController.createNewUser = async (req, res, next) => {
+    // console.log(Users);
+    //set all the values for no user from req.body
+    // console.log(JSON.stringify(req.body));
+    // const {username, firstName, lastName, email, interests, zipCode, password} = req.body
+    // console.log('before inserting new document to db');
+   
+    const newUser = new Users({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      zipCode: req.body.zipCode,
+      interests: req.body.interests,
+      bio: req.body.bio,
+      imageCount: req.body.imageCount,
+      profilePhoto: "",
     });
-    res.cookie("currentInterests", JSON.stringify(savedUser.interests), {
-      httpOnly: false,
-      overwrite: true,
-    });
-    res.cookie("zipCode", JSON.stringify(savedUser.zipCode), {
-      httpOnly: false,
-      overwrite: true,
-    });
-    res.cookie("imageCount", JSON.stringify(user.imageCount), {
-      httpOnly: false,
-      overwrite: true,
-    });
-    console.log(
-      JSON.stringify(savedUser.interests),
-      `\nthis is JSON interests`,
-      `\n`,
-      JSON.stringify(savedUser.zipCode),
-      `\n this is JSON zip code`,
-      savedUser.email,
-      `\n this is email`
-    );
-    console.log("saved the user to the db");
-    return next();
+    console.log('made the document')
+    try {
+      //save the new user to the database
+      const savedUser = await Users.create(newUser)
+      res.cookie('currentEmail', savedUser.email, { httpOnly: false, overwrite: true });
+      res.cookie('currentInterests', JSON.stringify(savedUser.interests), { httpOnly: false, overwrite: true });
+      res.cookie('zipCode', JSON.stringify(savedUser.zipCode), { httpOnly: false, overwrite: true});
+      res.cookie('imageCount', JSON.stringify(savedUser.imageCount), { httpOnly: false, overwrite: true});
+    // console.log(JSON.stringify(savedUser.interests), `\nthis is JSON interests`, `\n`, JSON.stringify(savedUser.zipCode), `\n this is JSON zip code`, savedUser.email, `\n this is email`);
+    console.log('saved the user to the db');
+    return next()
   } catch (error) {
     console.log(error);
-    next(error);
-    next(error);
+    next(error)
   }
-
+  
   // .then((data) => {
   //   Users.insertOne({data})
   //   console.log('User saved to the database');
@@ -159,75 +123,116 @@ userController.createNewUser = async (req, res, next) => {
   //   console.log('Error saving user:', error);
   //   return next({error: error.message})
   // });
-};
+  }
 
-userController.uploadImages = (req, res) => {
-  const upload = multer({
-    storage: multer.memoryStorage(),
-    limits: {
-      fileSize: 15 * 1024 * 1024, // no larger than 5mb, you can change as needed.
-    },
-    onError: function (err, next) {
-      console.log("error", err);
-      next(err);
-    },
-  }).array("image");
-
-  upload(req, res, function (err) {
-    if (err) {
-      console.log(err);
-      return res.status(500).json({ message: "Error uploading Files" });
-    }
-    const email = req.params.userEmail;
-
-    console.log(req.files);
-    if (!req.files) {
-      res.status(400).send("No file uploaded.");
-      return;
-    }
-    try {
-      req.files.forEach((file, index) => {
+  userController.uploadImages = (req, res) => {
+    const upload = multer({
+      storage: multer.memoryStorage(),
+      limits: {
+        fileSize: 10 * 1024 * 1024, // no larger than 10mb, you can change as needed.
+      },
+      onError: function (err, next) {
+        console.log("error", err);
+        next(err);
+      },
+    }).array("image");
+  
+    const processFile = (file, email, bucket) => {
+      return new Promise((resolve, reject) => {
         const blob = bucket.file(file.originalname);
         const blobStream = blob.createWriteStream();
+  
         blobStream.on("error", (err) => {
-          // next(err);
           console.log(err);
+          reject(err);
         });
+  
         blobStream.on("finish", async () => {
-          // The public URL can be used to directly access the file via HTTP.
-
           const publicUrl = format(
             `https://storage.googleapis.com/${bucket.name}/${blob.name}`
           );
-          Images.create({ email: email, image: publicUrl });
-          if (index === 0) {
-            const updatedUser = await Users.findOneAndUpdate(
-              { email: email, profilePhoto: "" },
-              { $set: { profilePhoto: publicUrl } },
-              { new: true }
-            );
-            if (updatedUser) {
-              console.log("profile photo updated for new User");
-            } else {
-              console.log("user already exists, profile photo not updated");
+  
+          try {
+            await Images.create({ email: email, image: publicUrl });
+            res.locals.returnUrls.push(publicUrl); // push publicUrl into res.locals.returnUrls
+            console.log('publicUrl: ', publicUrl);
+            console.log('return Urls: ', res.locals.returnUrls);
+  
+            if (res.locals.returnUrls.length === 1) { // Check if the first image is uploaded
+              const updatedUser = await Users.findOneAndUpdate(
+                { email: email, profilePhoto: "" },
+                { $set: { profilePhoto: publicUrl } },
+                { new: true }
+              );
+              if (updatedUser) {
+                console.log("profile photo updated for new User");
+              } else {
+                console.log("user already exists, profile photo not updated");
+              }
+              res.locals.profilePhoto = publicUrl;
             }
-            res.locals.profilePhoto = publicUrl;
+  
+            resolve();
+          } catch (error) {
+            reject(error);
           }
         });
-        // urls.push(publicUrl);
+  
         blobStream.end(file.buffer);
       });
-      res.status(200).send("Images uploaded");
-    } catch (err) {
-      res.status(500).send("Error uploading images");
+    };
+  
+    upload(req, res, async function (err) {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ message: "Error uploading Files" });
+      }
+      const email = req.params.userEmail;
+  
+      // console.log(req.files);
+      if (!req.files) {
+        res.status(400).send("No file uploaded.");
+        return;
+      }
+  
+      res.locals.returnUrls = [];
+      try {
+        await Promise.all(req.files.map((file) => processFile(file, email, bucket)));
+  
+        console.log('outside blobStream urls: ', res.locals.returnUrls);
+        res.status(200).json({ message: 'Images upload', returnUrls: res.locals.returnUrls });
+      } catch (error) {
+        console.error('Error uploading images:', error);
+        res.status(500).json({ message: 'Error uploading images' });
+      }
+    });
+  };
+
+//middleware to delete images from the Images collection. Google storage is unaffected
+userController.deleteImage = async (req, res, next) => {
+  const email = req.params.userEmail;
+  const imageUrl = req.body.image;
+
+  const deletedImages = [];
+  try {
+    for (let i = 0; i < imageUrl.length; i++) {
+      // find image with matching url and email and delete it
+      let deleted = await Images.deleteOne({ email: email, image: imageUrl }); //delete image from Image collection
+      if (deleted) deletedImages.push(deleted); //push deleted image to deletedImages array
+      else console.log('image not found: ', index); //if image not found, log index of image
+      
     }
-  });
+  }
+    catch (err) {
+    res.status(500).send("Error deleting images");
+    res.end();
+    console.log(err);
+  }
+  res.status(200).send("Images deleted");
 };
 
 userController.updateUser = async (req, res, next) => {
   try {
-    console.log("enter updateUser");
-    console.log("req.body.imageCount: ", req.body.imageCount);
     // grab username from the currentUser cookie
     const username = req.cookies.currentUsername;
     const email = req.cookies.currentEmail;
@@ -240,7 +245,7 @@ userController.updateUser = async (req, res, next) => {
     );
 
     if (updatedUser) {
-      console.log(updatedUser);
+      // console.log(updatedUser);
       res.cookie("currentUsername", updatedUser.username, {
         httpOnly: false,
         overwrite: true,
@@ -337,7 +342,7 @@ userController.getProfiles = async (req, res, next) => {
 
     // interests: { $in: interests },
 
-    console.log("this is the users", users);
+    // console.log("this is the users", users);
     // Array of users with matching zipCode and at least one common interest
 
     res.status(200);

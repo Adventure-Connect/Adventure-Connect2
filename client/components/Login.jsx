@@ -15,67 +15,6 @@ const Login = () => {
   const { setOTP, setEmail } = useContext(RecoveryContext);
   const [cookies, setCookie] = useCookies();
 
-  //sends one time password when "forgot your password?" is clicked
-  // const sendOtp = async () => {
-  //   if (userEmail) {
-  //     try {
-  //       const data = await fetch(
-  //         `http://localhost:8080/api/check_email?email=${userEmail}`,
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //       const data = await fetch(
-  //         `http://localhost:8080/api/check_email?email=${userEmail}`,
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       );
-  //       );
-  //       const json = await data.json();
-  //       console.log(json);
-  //       if (json.user) {
-  //         const OTP = Math.floor(Math.random() * 9000 + 1000);
-  //         console.log(OTP);
-  //         setOTP(OTP);
-  //         setEmail(userEmail);
-
-  //         try {
-  //           await fetch(`http://localhost:8080/api/send_email`, {
-  //             method: "POST",
-  //             headers: {
-  //               "Content-Type": "application/json",
-  //             },
-  //             credentials: "include",
-  //               "Content-Type": "application/json",
-  //             },
-  //             credentials: "include",
-  //             body: JSON.stringify({
-  //               OTP: OTP,
-  //               recipient_email: userEmail,
-  //             }),
-  //               OTP: OTP,
-  //               recipient_email: userEmail,
-  //             }),
-  //           });
-  //           navigate("/otp");
-  //         } catch (err) {
-  //           alert("User with this email does not exist!");
-  //           navigate("/otp");
-  //         } catch (err) {
-  //           alert("User with this email does not exist!");
-  //           console.log(response.data.message);
-  //         }
-  //       }
-  //     } catch (err) {
-  //       alert("Please enter your email");
-  //     }
-  //   }
-  // };
 
   //checks to see if user credentials have been verified
   if (authenticated) {
