@@ -140,14 +140,14 @@ const ImageUpload = forwardRef((props, ref) => {
         // console.log('imageCount updated');
 
         //update profile picture
-       await fetch('/api/api/user', {
-          method: 'PUT',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          credentials: 'include',
-          body: JSON.stringify({ profileUrl } )
-      })
+      //  await fetch('/api/api/user', {
+      //     method: 'PUT',
+      //     headers: {
+      //         'Content-Type': 'application/json'
+      //     },
+      //     credentials: 'include',
+      //     body: JSON.stringify({ profileUrl } )
+      // })
         // navigate('/dashboard');
       }
       catch (err) {
