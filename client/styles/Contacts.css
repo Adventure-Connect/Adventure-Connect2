@@ -89,7 +89,7 @@
     transition: 0.5s ease-in-out;
 }
 .contacts .selected{
-    background-color: rgba(26, 131, 255,0.8)
+    background-color: #b98d5c;
     /* background-color: #a6aa98; */
 
 }
