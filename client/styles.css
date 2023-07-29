@@ -1,54 +1,11 @@
-
-/* ul {
-  border-right: blue solid 2px;
-  width: 300px;
-  height: 900px;
-  list-style: none;
-}
-
-
-
-li,
-a {
-  color: pink;
-  text-decoration: none;
-  padding: 5px;
-  font-size: large;
-} */
-
 #bio {
   size: 40;
-  /* padding-top: 0;
-  padding-left: 0; */
 }
-
-/* .carousel-container {
-  display: inline-block;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.carousel {
-  overflow: hidden;
-  width: 300px;
-  height: 300px;
-} */
 
 .inner {
   white-space: nowrap;
   transition: transform 0.3s;
 }
-
-/* .carousel-item {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 200px;
-  width: 300px;
-  background-color: aquamarine;
-  color: black;
-} */
 
 * {
   font-family: "Roboto", sans-serif;
