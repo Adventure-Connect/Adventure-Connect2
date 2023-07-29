@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useCookies } from "react-cookie";
+import ImageUpload from './ImageUpload';
 
 const UserProfile = () => {
   const [email, setEmail] = useState();
@@ -13,7 +14,10 @@ const UserProfile = () => {
     setEmail(cookies.currentEmail);
   }, [userBio]);
 
-  const updateProfile = async () => {
+  //ref to call upload function from ImageUpload Component
+  const imageUploadRef = useRef(null);
+
+  const updateProfile = async (e) => {
     const userInfo = {
       email: email,
       name: userName,
@@ -31,6 +35,9 @@ const UserProfile = () => {
       });
       const json = await data.json();
       console.log(json);
+      if (imageUploadRef.current) {
+        imageUploadRef.current.handleFileUpload(e, email);
+    }
       if (cookies.currentEmail === undefined) {
         setStatus("Error occurred. Please be sure you're logged in.");
       } else {
@@ -38,6 +45,7 @@ const UserProfile = () => {
       }
     } catch (err) {
       console.log("an error occurred");
+      console.log(err);
     }
   };
 
@@ -67,6 +75,10 @@ const UserProfile = () => {
           setUserLocation(event.target.value);
         }}
       />
+
+      <div>
+        <ImageUpload ref={imageUploadRef}/>
+      </div>
 
       <h3>Bio</h3>
       <textarea

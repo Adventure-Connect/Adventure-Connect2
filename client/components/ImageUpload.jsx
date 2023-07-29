@@ -106,6 +106,37 @@ const ImageUpload = forwardRef((props, ref) => {
         if (images[index] !== null && images[index] !== undefined) {
           deleteData.push(images[index].props.src);
         }
+        //delete images that are no longer in the files array
+        const deleted = await fetch(`/api/deleteImage/${email}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({image: deleteData})
+        });
+
+
+        //update image count
+        // await fetch('/api/api/user', {
+        //         method: 'PUT',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         credentials: 'include',
+        //         body: JSON.stringify({ imageCount } )
+        //     })
+        // console.log('imageCount updated');
+
+        //update profile picture
+      //  await fetch('/api/api/user', {
+      //     method: 'PUT',
+      //     headers: {
+      //         'Content-Type': 'application/json'
+      //     },
+      //     credentials: 'include',
+      //     body: JSON.stringify({ profileUrl } )
+      // })
+        // navigate('/dashboard');
       }
     });
 
