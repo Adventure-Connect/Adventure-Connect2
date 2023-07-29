@@ -182,7 +182,7 @@ const ImageUpload = forwardRef((props, ref) => {
       <div className="imageContainer">
         {imageUploadElements}
         <div style={{marginBottom: '3%'}}>
-          <button className='btn' onClick={e => handleFileUpload(e, email, imageCount, profilePicture)} id='image_upload'>Upload</button>
+          {/* <button className='btn' onClick={e => handleFileUpload(e, email, imageCount, profilePicture)} id='image_upload'>Upload</button> */}
         </div>
       </div>
     </div>

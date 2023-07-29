@@ -105,7 +105,7 @@ userController.verifyLogin = async (req, res, next) => {
       res.cookie('currentEmail', savedUser.email, { httpOnly: false, overwrite: true });
       res.cookie('currentInterests', JSON.stringify(savedUser.interests), { httpOnly: false, overwrite: true });
       res.cookie('zipCode', JSON.stringify(savedUser.zipCode), { httpOnly: false, overwrite: true});
-      res.cookie('imageCount', JSON.stringify(user.imageCount), { httpOnly: false, overwrite: true});
+      res.cookie('imageCount', JSON.stringify(savedUser.imageCount), { httpOnly: false, overwrite: true});
     // console.log(JSON.stringify(savedUser.interests), `\nthis is JSON interests`, `\n`, JSON.stringify(savedUser.zipCode), `\n this is JSON zip code`, savedUser.email, `\n this is email`);
     console.log('saved the user to the db');
     return next()
