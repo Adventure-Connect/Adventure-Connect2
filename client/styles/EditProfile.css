@@ -1,20 +1,20 @@
 
-.interests {
+.edit-profile {
   display: flex;
   flex-direction: column;
 }
 
-.interests h1 {
+/* .edit-profile h1 {
   padding: 10px 0;
   font-weight: 500;
 }
 
-.current-interests {
+input {
   display: flex;
   padding: 5px;
 }
 
-.current-interests ul {
+input {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -27,7 +27,7 @@
   margin: 5px;
 }
 
-.interests p {
+.edit-profile p {
   font-size: .7rem;
   margin: -5px;
 }
@@ -37,7 +37,7 @@
   width: 200px;
 }
 
-.interests button {
+.edit-profile button {
   padding: 10px 10px;
   width: 150px;
   color: #f0f0f0;
@@ -50,4 +50,4 @@
 
 button:hover {
   background-color: #595855;
-}
+} */

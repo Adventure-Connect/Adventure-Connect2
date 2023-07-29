@@ -7,51 +7,35 @@ const activities = [
   {
     label: "Backpacking",
     value: "Backpacking",
-    color: "#2c2b27",
-    fontColor: "#f0f0f0",
   },
   {
     label: "Camping",
     value: "Camping",
-    color: "#877767 ",
-    fontColor: "#f0f0f0",
   },
   {
     label: "Climbing",
     value: "Climbing",
-    color: "#b98d5c",
-    fontColor: "#f0f0f0",
   },
-  { label: "Hiking", value: "Hiking", color: "#2c2b27", fontColor: "#f0f0f0" },
+  { label: "Hiking", value: "Hiking" },
   {
     label: "Mountain Biking",
     value: "Mountain Biking",
-    color: "#959a86",
-    fontColor: "#f0f0f0",
   },
   {
     label: "Rafting",
     value: "Rafting",
-    color: "#2c2b27",
-    fontColor: "#f0f0f0",
   },
   {
     label: "Road Cycling",
     value: "Road Cycling",
-    color: "#2c2b27",
-    fontColor: "#f0f0f0",
   },
   {
     label: "Roller Skating",
     value: "Roller Skating",
-    color: "#2c2b27",
-    fontColor: "#f0f0f0",
   },
   {
     label: "Trail Running",
     value: "Trail Running",
-    color: "#2c2b27",
-    fontColor: "#f0f0f0",
   },
 ];
 
@@ -105,16 +89,8 @@ const Interests = () => {
         Add more interests by searching by category or searching by keyword!
       </p>
       <Select
+      className="select"
         options={activities}
-        onChange={(opt) => {
-          const temp = interestLabels.slice();
-          const interestsTemp = interests.slice();
-          temp.push(<label key={opt.value.toLowerCase()}>{opt.value}</label>);
-          interestsTemp.push(opt.value);
-          setInterestLabels(temp);
-          setInterests(interestsTemp);
-          console.log(interests);
-        }}
       />
       <button>Save Changes</button>
     </div>

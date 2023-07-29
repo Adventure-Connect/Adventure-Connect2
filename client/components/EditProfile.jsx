@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
+import "../styles/EditProfile.css";
 
 const UserProfile = () => {
   const [email, setEmail] = useState();
@@ -42,7 +43,7 @@ const UserProfile = () => {
   };
 
   return (
-    <>
+    <div className="edit-profile">
       <h1>Edit Profile</h1>
       <p>This information will appear on your public profile</p>
 
@@ -81,7 +82,7 @@ const UserProfile = () => {
       ></textarea>
       {status && <p>{status}</p>}
       <button onClick={updateProfile}>Update Profile</button>
-    </>
+    </div>
   );
 };
 
