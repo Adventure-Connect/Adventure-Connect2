@@ -126,6 +126,7 @@ userController.verifyLogin = async (req, res, next) => {
   }
 
   userController.uploadImages = (req, res) => {
+    console.log('ENTER UPLOAD IMAGES')
     const upload = multer({
       storage: multer.memoryStorage(),
       limits: {

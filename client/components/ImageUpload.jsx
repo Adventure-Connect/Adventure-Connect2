@@ -87,7 +87,7 @@ const ImageUpload = forwardRef((props, ref) => {
     // handle file upload
     const handleFileUpload = async (e, email, imageCount, profilePicture) => {
       e.preventDefault();
-
+      console.log('ENTER HANDLE FILE UPLOAD FRONT END')
       const formData = new FormData();
       
       const deleteData = [];
@@ -101,7 +101,7 @@ const ImageUpload = forwardRef((props, ref) => {
         };
       });
       
-      // console.log(deleteData);
+      console.log('FORM DATA ADDED')
 
       try {
         const response = await fetch(`/api/upload-file-to-cloud-storage/${email}`, {
@@ -182,7 +182,7 @@ const ImageUpload = forwardRef((props, ref) => {
       <div className="imageContainer">
         {imageUploadElements}
         <div style={{marginBottom: '3%'}}>
-          {/* <button className='btn' onClick={e => handleFileUpload(e, email, imageCount, profilePicture)} id='image_upload'>Upload</button> */}
+          <button className='btn' onClick={e => handleFileUpload(e, email, imageCount, profilePicture)} id='image_upload'>Upload</button>
         </div>
       </div>
     </div>
