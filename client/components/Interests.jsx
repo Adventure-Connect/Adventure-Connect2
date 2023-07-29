@@ -48,6 +48,19 @@ const Interests = () => {
     displayCurrentInterests();
   }, []);
 
+
+  //rotating colors for the background of the interest labels
+  const rotatingColors = [
+    "#877767",
+    "#b98d5c",
+    "#2c2b27",
+    "#a09487",
+    "#c7a57e",
+    "#595855",
+  ];
+  let colorIndex = 0;
+
+
   const displayCurrentInterests = async () => {
     console.log("displayInterests firing");
     try {
@@ -77,21 +90,14 @@ const Interests = () => {
       <div className="current-interests">
         <ul>
           {interests &&
-            interests.map((interest) => (
-              <li key={interest} style={{ backgroundColor: colors[1] }}>
-                {interest}
-              </li>
-            ))}
+            interests.map((interest, index) => <li key={interest} style={{backgroundColor: rotatingColors[index]}}>{interest}</li>)}
         </ul>
       </div>
       <h2>Add more interests</h2>
       <p>
         Add more interests by searching by category or searching by keyword!
       </p>
-      <Select
-      className="select"
-        options={activities}
-      />
+      <Select className="select" options={activities} />
       <button>Save Changes</button>
     </div>
   );
