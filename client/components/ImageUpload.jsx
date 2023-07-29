@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef, forwardRef } from 'react';
-import { useCookies } from 'react-cookie';
-import { useNavigate, useLocation } from 'react-router';
-import ImageUpload2 from './ImageUpload2';
+import React, { useState, useEffect, useRef, forwardRef } from "react";
+import { useCookies } from "react-cookie";
+import { useNavigate, useLocation } from "react-router";
+import ImageUpload2 from "./ImageUpload2";
 import "../styles/ImageUpload2.css";
 
 const ImageUpload = forwardRef((props, ref) => {
@@ -11,8 +11,8 @@ const ImageUpload = forwardRef((props, ref) => {
   const [imageCount, setImageCount] = useState(0);
   const [dragActive, setDragActive] = useState(false);
   const inputRef = useRef(null);
-  const [ files, setFiles ] = useState([null, null, null, null, null, null]);
-  const [ profilePicture, setProfilePicture ] = useState(0);
+  const [files, setFiles] = useState([null, null, null, null, null, null]);
+  const [profilePicture, setProfilePicture] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -23,13 +23,13 @@ const ImageUpload = forwardRef((props, ref) => {
     // console.log('newfile: ', newFile);
     // console.log('parent component new file: ', newFiles);
     setFiles(newFiles);
-  }
+  };
 
   // update profile picture index from child component
   const handleProfilePictureUpdate = (newProfileIndex) => {
     // console.log('new Profile Pic Index: ', newProfileIndex);
     setProfilePicture(newProfileIndex);
-  }
+  };
 
   //grab email from cookies
   useEffect(() => {
@@ -44,32 +44,39 @@ const ImageUpload = forwardRef((props, ref) => {
       //populate files with images from database
       const fetchImages = async () => {
         try {
-          const data = await fetch(`http://localhost:8080/api/getImages/${currentEmailFromCookies}`, {
-                  method: 'GET',
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-          });
+          const data = await fetch(
+            `http://localhost:8080/api/getImages/${currentEmailFromCookies}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
           const json = await data.json();
           const images = [];
           const imageUrl = [];
+
+          console.log("THIS IS THE JSON", json);
+
           json.forEach((image, index) => {
-            images.push(<img src={image.image} key={index} alt={`Image ${index}`}></img>)
+            images.push(
+              <img src={image.image} key={index} alt={`Image ${index}`}></img>
+            );
             imageUrl.push(image.image);
             // console.log('image index: ', index);
             // console.log('image url: ', image.image);
             // console.log('images src: ', images[index].props.src)
-          })
-          const newFiles = files.map((file, index) => imageUrl[index] || null)
+          });
+          const newFiles = files.map((file, index) => imageUrl[index] || null);
           // console.log('newFiles: ', newFiles)
           // console.log('images: ', images)
           setFiles(newFiles);
           setImages(images);
-        }
-        catch (err) {
+        } catch (err) {
           return err;
         }
-      }
+      };
       fetchImages();
     }
   }, []);
@@ -83,40 +90,21 @@ const ImageUpload = forwardRef((props, ref) => {
     setImageCount(props.imageCount);
   }, [props.email, props.imageCount]);
 
+  // handle file upload
+  const handleFileUpload = async (e, email, imageCount, profilePicture) => {
+    e.preventDefault();
 
-    // handle file upload
-    const handleFileUpload = async (e, email, imageCount, profilePicture) => {
-      e.preventDefault();
-      console.log('ENTER HANDLE FILE UPLOAD FRONT END')
-      const formData = new FormData();
-      
-      const deleteData = [];
+    const formData = new FormData();
 
-      files.forEach((file, index) => {
-        if (typeof file !== 'string') {
-          formData.append('image', file)
-          if (images[index] !== null && images[index] !== undefined) {
-            deleteData.push(images[index].props.src);
-          }
-        };
-      });
-      
-      console.log('FORM DATA ADDED')
+    const deleteData = [];
 
-      try {
-        const response = await fetch(`/api/upload-file-to-cloud-storage/${email}`, {
-            method  : 'POST',
-            body: formData
-            }
-        )
-         // Check if the response is successful (status code 200-299)
-        if (response.ok) {
-          const uploadedImages = await response.json();
-          console.log('uploaded images: ', uploadedImages.returnUrls);
-          const profileUrl = uploadedImages.returnUrls[profilePicture];
-        } else {
-          // Handle the error if the response is not successful
-          console.log('Error: Could not upload images');
+    console.log("THIS IS THE FILES", files);
+
+    files.forEach(async (file, index) => {
+      if (typeof file !== "string") {
+        formData.append("image", file);
+        if (images[index] !== null && images[index] !== undefined) {
+          deleteData.push(images[index].props.src);
         }
         //delete images that are no longer in the files array
         const deleted = await fetch(`/api/deleteImage/${email}`, {
@@ -150,39 +138,98 @@ const ImageUpload = forwardRef((props, ref) => {
       // })
         // navigate('/dashboard');
       }
-      catch (err) {
-        console.log(err);
-        return alert('Issue uploading your images. Please try again later.');
+    });
+
+    // console.log(deleteData);
+
+    try {
+      const response = await fetch(
+        `/api/upload-file-to-cloud-storage/${email}`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      // Check if the response is successful (status code 200-299)
+      if (response.ok) {
+        const uploadedImages = await response.json();
+        console.log("uploaded images: ", uploadedImages.returnUrls);
+        const profileUrl = uploadedImages.returnUrls[profilePicture];
+      } else {
+        // Handle the error if the response is not successful
+        console.log("Error: Could not upload images");
       }
+      //delete images that are no longer in the files array
+      const deleted = await fetch(`/api/deleteImage/${email}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ image: deleteData }),
+      });
+
+      //update image count
+      // await fetch('/api/api/user', {
+      //         method: 'PUT',
+      //         headers: {
+      //             'Content-Type': 'application/json'
+      //         },
+      //         credentials: 'include',
+      //         body: JSON.stringify({ imageCount } )
+      //     })
+      // console.log('imageCount updated');
+
+      //update profile picture
+      // await fetch("/api/api/user", {
+      //     method: "PUT",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     credentials: "include",
+      //     body: JSON.stringify({ profileUrl }),
+      //   });
+      // navigate('/dashboard');
+    } catch (err) {
+      console.log(err);
+      return alert("Issue uploading your images. Please try again later.");
     }
+  };
 
-    //expose handleFileUpload function to parent component
-    React.useImperativeHandle(ref, () => ({
-      handleFileUpload,
-    }));
+  //expose handleFileUpload function to parent component
+  React.useImperativeHandle(ref, () => ({
+    handleFileUpload,
+  }));
 
-    // create six image upload elements with files if they already exist
-    const imageUploadElements = files.map((file, index) => {
-      return (
-        <ImageUpload2 
-        key={index} 
-        id={index} 
-        dragActive={dragActive} 
-        file={file} 
-        onFileUpdate={handleChildFileUpdate} 
+  // create six image upload elements with files if they already exist
+  const imageUploadElements = files.map((file, index) => {
+    return (
+      <ImageUpload2
+        key={index}
+        id={index}
+        dragActive={dragActive}
+        file={file}
+        onFileUpdate={handleChildFileUpdate}
         profilePictureIndex={profilePicture}
         selectProfilePic={handleProfilePictureUpdate}
-        />)
-    })
-   
+      />
+    );
+  });
 
   return (
     <div className="uploadContainer">
-      <h3 id='uploadHeader'>Photos</h3>
+      <h3 id="uploadHeader">Photos</h3>
       <div className="imageContainer">
         {imageUploadElements}
-        <div style={{marginBottom: '3%'}}>
-          <button className='btn' onClick={e => handleFileUpload(e, email, imageCount, profilePicture)} id='image_upload'>Upload</button>
+        <div style={{ marginBottom: "3%" }}>
+          <button
+            className="btn"
+            onClick={(e) =>
+              handleFileUpload(e, email, imageCount, profilePicture)
+            }
+            id="image_upload"
+          >
+            Upload
+          </button>
         </div>
       </div>
     </div>
@@ -199,7 +246,7 @@ const ImageUpload = forwardRef((props, ref) => {
 //           <div>
 //             <p>Drag and drop your file here or</p>
 //             <button className='upload-button' onClick={onButtonClick}>Upload a file</button>
-//           </div> 
+//           </div>
 //         </label>
 //         { dragActive && <div id='drag-file-element' onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={(e) => handleDrop(e, imageCount)}></div> }
 //        </form>

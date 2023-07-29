@@ -1,0 +1,36 @@
+
+.account-mgmt {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 25px 30%;
+}
+
+
+.account-mgmt h1, h2 {
+  padding: 10px 0;
+  font-weight: 500;
+}
+
+.account-mgmt label {
+  margin-top: 10px
+}
+
+.account-mgmt p {
+  margin-top: 30px;
+}
+
+.account-mgmt button {
+  padding: 10px 10px;
+  width: 200px;
+  color: #f0f0f0;
+  border: none;
+  background-color: #2c2b27;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  margin: 30px 0;
+}
+
+button:hover {
+  background-color: #595855;
+}

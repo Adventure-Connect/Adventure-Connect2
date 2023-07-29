@@ -1,16 +1,65 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-// import "../styles/Interests.css";
+import "../styles/Interests.css";
+import Select from "react-select";
+
+const activities = [
+  {
+    label: "Backpacking",
+    value: "Backpacking",
+  },
+  {
+    label: "Camping",
+    value: "Camping",
+  },
+  {
+    label: "Climbing",
+    value: "Climbing",
+  },
+  { label: "Hiking", value: "Hiking" },
+  {
+    label: "Mountain Biking",
+    value: "Mountain Biking",
+  },
+  {
+    label: "Rafting",
+    value: "Rafting",
+  },
+  {
+    label: "Road Cycling",
+    value: "Road Cycling",
+  },
+  {
+    label: "Roller Skating",
+    value: "Roller Skating",
+  },
+  {
+    label: "Trail Running",
+    value: "Trail Running",
+  },
+];
 
 const Interests = () => {
   const [cookies, setCookie] = useCookies();
   const [interests, setInterests] = useState();
-  const exampleInterests = ["hiking", "rollerskating"];
   const colors = ["#877767", "#b98d5c"];
 
   useEffect(() => {
     displayCurrentInterests();
   }, []);
+
+
+  //rotating colors for the background of the interest labels
+  const rotatingColors = [
+    "#877767",
+    "#b98d5c",
+    "#2c2b27",
+    "#a09487",
+    "#c7a57e",
+    "#595855",
+  ];
+  let colorIndex = 0;
+
 
   const displayCurrentInterests = async () => {
     console.log("displayInterests firing");
@@ -41,17 +90,14 @@ const Interests = () => {
       <div className="current-interests">
         <ul>
           {interests &&
-            interests.map((interest) => (
-              <li key={interest} style={{ backgroundColor: colors[1] }}>
-                {interest}
-              </li>
-            ))}
+            interests.map((interest, index) => <li key={interest} style={{backgroundColor: rotatingColors[index]}}>{interest}</li>)}
         </ul>
       </div>
       <h2>Add more interests</h2>
       <p>
         Add more interests by searching by category or searching by keyword!
       </p>
+      <Select className="select" options={activities} />
       <button>Save Changes</button>
     </div>
   );

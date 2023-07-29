@@ -21,8 +21,8 @@ const Navbar = () => {
             <Link to="#" className="menu-bars">
               <FaIcons.FaBars onClick={showSidebar} />
             </Link>
-            <h1>Adventure Connect</h1>
           </div>
+            <h1>Adventure Connect</h1>
 
           {cookies.zipCode ? <Notification /> : null}
         </div>
