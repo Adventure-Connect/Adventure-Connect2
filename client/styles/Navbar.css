@@ -20,6 +20,8 @@
 
 .navbar h1 {
   color: white;
+  margin: auto;
+  font-weight: 500;
 }
 
 .menu-bars {

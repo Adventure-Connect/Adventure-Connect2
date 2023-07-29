@@ -2,22 +2,27 @@
 .edit-profile {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  margin: 25px 30%;
 }
 
-/* .edit-profile h1 {
+
+.edit-profile h1 {
+  padding: 10px 0;
+  font-weight: 500;
+}
+
+.edit-profile h3 {
   padding: 10px 0;
   font-weight: 500;
 }
 
 input {
-  display: flex;
   padding: 5px;
 }
 
-input {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+textarea {
+  padding: 10px;
 }
 
 .current-interests li {
@@ -28,8 +33,7 @@ input {
 }
 
 .edit-profile p {
-  font-size: .7rem;
-  margin: -5px;
+  font-size: .9rem;
 }
 
 .interests .select {
@@ -45,9 +49,9 @@ input {
   background-color: #2c2b27;
   border-radius: 5px;
   font-size: 1.1rem;
-  margin: 30px;
+  margin: 30px 0;
 }
 
 button:hover {
   background-color: #595855;
-} */
+}
