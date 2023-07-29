@@ -42,6 +42,14 @@ router.post(
   }
 );
 
+router.delete(  "/deleteImage/:userEmail",
+(req, res, next) => {
+  console.log("enter delete route");
+  return next();
+},
+  userController.deleteImage
+)
+
 router.get("/", (req, res) => {
   res.send("hello world");
 });
