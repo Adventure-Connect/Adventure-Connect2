@@ -5,11 +5,12 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import "../styles/UserSpecific.css";
 
+
 const UserSpecific = () => {
   const [cookies, setCookie] = useCookies();
   const location = useLocation();
   console.log(location);
-  console.log(location.state.email);
+  console.log(`this is location.state.email: ${location.state.email}`);
   console.log("this is the current email", cookies.currentEmail);
 
   const [userPhotos, setUserPhotos] = useState([]);

@@ -15,19 +15,33 @@
   padding: 5px;
 }
 
-.current-interests li {
-  padding: 5px 5px 5px 5px;
-  border-radius: 5px;
-  list-style: none;
+.current-interests ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-button {
+.current-interests li {
   padding: 10px;
+  border-radius: 5px;
+  list-style: none;
+  margin: 5px;
+}
+
+.interests p {
+  font-size: .7rem;
+  margin: -5px;
+}
+
+.interests button {
+  padding: 10px 10px;
   width: 150px;
   color: #f0f0f0;
   border: none;
   background-color: #2c2b27;
   border-radius: 5px;
+  font-size: 1.1rem;
+  margin: 30px;
 }
 
 button:hover {

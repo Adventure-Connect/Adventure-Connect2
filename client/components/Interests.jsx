@@ -1,11 +1,63 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-// import "../styles/Interests.css";
+import "../styles/Interests.css";
+import Select from "react-select";
+
+const activities = [
+  {
+    label: "Backpacking",
+    value: "Backpacking",
+    color: "#2c2b27",
+    fontColor: "#f0f0f0",
+  },
+  {
+    label: "Camping",
+    value: "Camping",
+    color: "#877767 ",
+    fontColor: "#f0f0f0",
+  },
+  {
+    label: "Climbing",
+    value: "Climbing",
+    color: "#b98d5c",
+    fontColor: "#f0f0f0",
+  },
+  { label: "Hiking", value: "Hiking", color: "#2c2b27", fontColor: "#f0f0f0" },
+  {
+    label: "Mountain Biking",
+    value: "Mountain Biking",
+    color: "#959a86",
+    fontColor: "#f0f0f0",
+  },
+  {
+    label: "Rafting",
+    value: "Rafting",
+    color: "#2c2b27",
+    fontColor: "#f0f0f0",
+  },
+  {
+    label: "Road Cycling",
+    value: "Road Cycling",
+    color: "#2c2b27",
+    fontColor: "#f0f0f0",
+  },
+  {
+    label: "Roller Skating",
+    value: "Roller Skating",
+    color: "#2c2b27",
+    fontColor: "#f0f0f0",
+  },
+  {
+    label: "Trail Running",
+    value: "Trail Running",
+    color: "#2c2b27",
+    fontColor: "#f0f0f0",
+  },
+];
 
 const Interests = () => {
   const [cookies, setCookie] = useCookies();
   const [interests, setInterests] = useState();
-  const exampleInterests = ["hiking", "rollerskating"];
   const colors = ["#877767", "#b98d5c"];
 
   useEffect(() => {
@@ -52,6 +104,18 @@ const Interests = () => {
       <p>
         Add more interests by searching by category or searching by keyword!
       </p>
+      <Select
+        options={activities}
+        onChange={(opt) => {
+          const temp = interestLabels.slice();
+          const interestsTemp = interests.slice();
+          temp.push(<label key={opt.value.toLowerCase()}>{opt.value}</label>);
+          interestsTemp.push(opt.value);
+          setInterestLabels(temp);
+          setInterests(interestsTemp);
+          console.log(interests);
+        }}
+      />
       <button>Save Changes</button>
     </div>
   );
