@@ -3,6 +3,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { useContext } from "react";
 import { RecoveryContext } from "../App";
 import { useCookies } from "react-cookie";
+import "../styles/Login.css";
+import loginImg from "../images/pexels-allan-mas-5384632.jpg";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,7 +16,6 @@ const Login = () => {
   const [userEmail, setUserEmail] = useState("");
   const { setOTP, setEmail } = useContext(RecoveryContext);
   const [cookies, setCookie] = useCookies();
-
 
   //checks to see if user credentials have been verified
   if (authenticated) {
@@ -64,45 +65,54 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h1>
-        Adventure<br></br>Connect
-      </h1>
-      <h1>
-        Adventure<br></br>Connect
-      </h1>
-      <h2>Find Friends Outdoors</h2>
-      <div id="login_container">
-        <form onSubmit={handleSubmit}>
-          <label>
-            <p>Email</p>
-            <input type="text" onChange={(e) => setUserEmail(e.target.value)} />
-          </label>
-          <label>
-            <p>Password</p>
-            <input
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </label>
-          {loginError && (
-            <p style={{ color: "red" }}>
-              Invalid login information. Please try again or{" "}
-              <a href="/signup">sign up</a>.
-            </p>
-          )}
+    <div
+      className="login-container"
+      style={{
+        background: `url('${loginImg}')`,
+        backgroundSize: "cover",
+      }}
+    >
+      <div className="image-overlay-container">
+        <h1 className="heading">
+          Adventure<br></br>Connect
+        </h1>
+        <div className="flex-container">
+          <h2 className="second-heading">Find Friends Outdoors</h2>
           <div>
-            <button className="btn" onClick={() => navigate("/signup")}>
-              Register
-            </button>
-            <button className="btn" type="submit" onClick={handleSubmit}>
-              Login
-            </button>
+            <form className="form-container" onSubmit={handleSubmit}>
+              <p>Email</p>
+              <input
+                type="text"
+                onChange={(e) => setUserEmail(e.target.value)}
+              />
+
+              <p>Password</p>
+              <input
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+
+              {loginError && (
+                <p style={{ color: "red" }}>
+                  Invalid login information. Please try again or{" "}
+                  <a href="/signup">sign up</a>.
+                </p>
+              )}
+              <div className="button-container">
+                <button className="btn" onClick={() => navigate("/signup")}>
+                  Register
+                </button>
+                <button className="btn" type="submit" onClick={handleSubmit}>
+                  Login
+                </button>
+              </div>
+
+              <a href="#" onClick={() => sendOtp()}>
+                Forgot your password?
+              </a>
+            </form>
           </div>
-        </form>
-        <a href="#" onClick={() => sendOtp()}>
-          Forgot your password?
-        </a>
+        </div>
       </div>
     </div>
   );
