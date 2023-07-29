@@ -10,7 +10,6 @@
 }
 
 .current-interests {
-  display: flex;
   padding: 5px;
 }
 
@@ -48,6 +47,6 @@
   margin: 30px;
 }
 
-button:hover {
+.interests button:hover {
   background-color: #595855;
 }
