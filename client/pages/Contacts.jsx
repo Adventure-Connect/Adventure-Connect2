@@ -4,6 +4,7 @@ import "../styles/Contacts.css";
 function Contacts(prop){
     // console.log(prop.contacts)
     // console.log(prop.currentUser)
+    // We get currentUser, contacts, and changeChat from Chat.jsx
 
     const [currentUserName, setCurrentUserName] = useState(undefined);
     const [currentUserImage, setCurrentUserImage] = useState(undefined);
@@ -16,7 +17,10 @@ function Contacts(prop){
         }
     },[prop.currentUser]);
 
-    // const changeCurrentChat = (index, contact) => {}
+    const changeCurrentChat = (index, contact) => {
+        setCurrentSelected(index)
+        prop.changeChat(contact)
+    }
     
     return(
         <>
@@ -27,13 +31,13 @@ function Contacts(prop){
                         {/* <img src = {`${Logo}` alt ="logo"} /> */}
                         {/* <h3>Adventure Connect</h3>  */}
                     {/* </div> */}
-
+                    <div className="contacts">
                     {prop.contacts.map((contact, index)=>{
                         return(
-                            <div className={`contact ${index === currentSelected ? "selected" : " "}`} key ={index}>
+                            <div className={`contact ${index === currentSelected ? "selected" : " "}`} key ={index} onClick={()=>changeCurrentChat(index, contact)}>
 
                                 <div className="avatar"> 
-                                    <img src={`${contact.profilePhoto}`} alt={`${contact.name}'s profile image`}/>
+                                    <img src={`${contact.profilePhoto}`} alt={`${contact.name}'s profile image` }/>
                                 </div>
                                 <div className = "username">
                                     <h3>{contact.name}</h3>
@@ -47,9 +51,10 @@ function Contacts(prop){
                         <img src ={`${currentUserImage}`} alt={`${currentUserName}'s profile image`}/>
                     </div>
                     <div className = "username">
-                         <h3>{currentUserName}</h3>
+                         <h2>{currentUserName}</h2>
                      </div>
                 </div>
+            </div>
             </div>
         )}
         </>

@@ -31,6 +31,11 @@ const sidebarData = [
     path: "/account/management",
     cName: 'nav-text'
   }
+  ,{
+    title: "Chat",
+    path: "/chat",
+    cName: 'nav-text'
+  }
 ];
 
 export default sidebarData;

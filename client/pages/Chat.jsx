@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import "../styles/Chat.css";
 import Contacts from "../pages/Contacts";
+import Welcome from "../pages/Welcome";
+import ChatContainer from "../pages/ChatContainer";
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,7 +11,9 @@ function Chat(){
 
     const navigate = useNavigate();
     const [contacts, setContacts] = useState([]);
-    const [currentUser, setCurrentUser] = useState(undefined)
+    const [currentUser, setCurrentUser] = useState(undefined);
+    const [currentChat, setCurrentChat] = useState(undefined);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     //current user Information from cookies
     const [cookies, setCookies] = useCookies();
@@ -32,7 +36,7 @@ function Chat(){
                     //set current user to current user data
                     // console.log(userData)
                     setCurrentUser(userData)
-                    
+                    setIsLoaded(true);
                 })
         }
        
@@ -48,16 +52,20 @@ function Chat(){
             setContacts(currentUser?.connections || []);
         }
     }, [currentUser])
+    const handleChatChange = (chat) =>{
+        setCurrentChat(chat)
+    }
 
     return(
-        <div className="main-container">
-            <div className='container'>
-                {/* {contacts.map(contact => (
-                    // Step 3: Map through contacts array and pass the name prop to Contacts component
-                    <Contacts key={contact.user_id} contactName={contact.name} contactProfilePhoto ={contact.profilePhoto} contactIdInfo ={contact.user_id} currentUser={currentUser}/>
-                ))}  */}
-                <Contacts contacts = {contacts} currentUser = { currentUser }/>
-            
+        <div className="main-chat-container">
+            <div className='chat-container'>
+                <Contacts contacts = {contacts} currentUser = { currentUser } changeChat = {handleChatChange}/>
+                {isLoaded && currentChat === undefined ? (
+                    <Welcome currentUser = { currentUser }/>
+                ):(
+                    <ChatContainer currentChat = { currentChat } currentUser = { currentUser }/>
+                )}
+                
             </div>
         </div>
     )

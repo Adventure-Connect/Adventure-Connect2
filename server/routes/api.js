@@ -79,10 +79,7 @@ router.get("/api/getUsers", userController.getProfiles, (req, res) => {
   res.json(usersToDisplay);
 });
 
-//GET a user --> created by KS 7/26
-router.get("/:email", userController.getCurrentUser, (req, res) => {
-  res.status(200).json(res.locals.userFound);
-});
+
 
 router.post(
   "/friendRequest",
@@ -105,6 +102,11 @@ router.put("/account", userController.updateUserInfo, (req, res) => {
 router.get("/interests", userController.getInterests, (req, res) => {
   console.log("/interests firing");
   res.end();
+});
+
+//GET a user --> created by KS 7/26
+router.get("/:email", userController.getCurrentUser, (req, res) => {
+  res.status(200).json(res.locals.userFound);
 });
 
 module.exports = router;

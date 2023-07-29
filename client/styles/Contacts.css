@@ -1,5 +1,123 @@
 .main-contact-container{
+    margin:10px;
     display: grid;
-    grid-template-columns: 10% 75% 15%;
+    /* grid-template-columns: 30% 30 40; */
+    grid-template-rows: 10% 75% 15%;
     overflow: hidden;
+    /* background-color: #707c78; */
+    /* background-color: #a6aa98; */
+    background-color: #f0f0f0;
+    border-radius: 1rem 0% 0% 1rem;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.avatar{
+    display: flex;
+    justify-content:center;   
+    height: 6rem;
+    width: 6rem;
+
+}
+
+.avatar img{
+    /* Will have to adjust*/
+    /* height: 7rem; */
+    /* width: 9rem; */
+    
+    padding: 0.4rem;
+    /* border: 0.4rem solid transparent; */
+    border-radius: 5rem;
+    /* transition: 0.5s ease-in-out; */
+
+    max-width:100%;
+    max-height:100%;
+    aspect-ratio: 5/3;
+    object-fit: cover;
+    object-position: center;
+
+    /* margin:3%; */
+}
+
+
+/* .avatar img:hover{
+    /* border: 0.4rem solid #f0f0f0; */
+    /* overflow-clip-margin: content-box;
+    overflow: clip; */
+/* } */ 
+
+.contacts{
+   padding-top: 0.4rem;
+   padding-bottom: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+    gap: 0.4rem; 
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;   
+}
+/* custom scrollbar */
+.contacts::-webkit-scrollbar {
+  width: 0.2rem;
+}
+
+.contacts::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.contacts::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 0.2rem;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+.contacts::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+}
+.contacts .contact{
+    
+    /* #060b26 */
+    background-color: rgba(117, 116, 112, 0.5);
+    width: 90%;
+    min-height: 5rem;
+    cursor: pointer;
+    border-radius: 0.2rem;
+    padding: 0.4rem;
+    gap: 1rem; 
+    display: flex;
+    align-items: center;
+    transition: 0.5s ease-in-out;
+}
+.contacts .selected{
+    background-color: rgba(26, 131, 255,0.8)
+    /* background-color: #a6aa98; */
+
+}
+.contact .username h3{
+    color: #060b26;
+    font-weight: bold;
+}
+
+.current-user{
+    background-color: rgba(166, 170, 152, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    /* margin-top: 20rem; */
+}
+.current-user .avatar img{
+    max-inline-size: 100%;
+}
+
+ .username h2{
+    font-size: bold;
+}
+@media (min-width: 720px) and (max-width: 1020px){
+    .main-contact-container{
+        gap: 0.5rem;
+    }
+    .username h2{
+        font-size: 1rem;
+    }
 }
